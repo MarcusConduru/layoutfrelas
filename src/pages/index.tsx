@@ -1,0 +1,6 @@
+export {default as CadastroObra} from './cadastro_obra'
+export {default as Configuracao} from './configuracao'
+export {default as Login} from './login'
+export {default as Menu} from './menu'
+export {default as UpdateConfiguracao} from './update_configuracao'
+export {default as NewConfiguracao} from './new_configuracao'

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/styles.css">
+    <title>Gerenciamento RUP - iRUP</title>
+    <style>
+         
+
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <div class="top-bar">
+                <div class="help">Ajuda</div>
+                <div class="user">Usuário1344</div>
+            </div>
+
+            <h1>Gerenciamento RUP</h1>
+
+            <div class="data-info">
+                <h2>Informações da Obra</h2>
+                <!-- Aqui serão exibidas informações da obra -->
+            </div>
+
+            <p>Preencha os dados referente à observação da etapa</p>
+
+            <div class="data-observation">
+                <label for="data_observacao">Data de Observação:</label>
+                <input type="date" id="data_observacao" name="data_observacao" required>
+            </div>
+
+            <div class="data-observation">
+                <label for="qt_homens">Qt. de Homens:</label>
+                <input type="number" id="qt_homens" name="qt_homens" required>
+            </div>
+
+            <div class="data-observation">
+                <label for="jornada">Jornada (hora):</label>
+                <input type="text" id="jornada" name="jornada" required>
+            </div>
+
+            <div class="data-observation">
+                <label for="qt_servico">Qt. de Serviço:</label>
+                <input type="number" id="qt_servico" name="qt_servico" required>
+            </div>
+
+            <div class="data-observation">
+                <label for="observacoes">Observações:</label>
+                <input type="text" id="observacoes" name="observacoes" required>
+            </div>
+
+            <div class="data-observation">
+                <label for="clima">Como estava o clima hoje?</label>
+                <select id="clima" name="clima" required>
+                    <option value="chuvoso">Chuvoso</option>
+                    <option value="seco">Seco</option>
+                    <option value="nublado">Nublado</option>
+                    <!-- Adicione outras opções de clima conforme necessário -->
+                </select>
+            </div>
+
+            <div class="buttons2">
+                <button onclick="location.href='menu.html'">Voltar</button>
+                <button onclick="location.href='revisao_dados_rup.html'">Avançar</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
