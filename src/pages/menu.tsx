@@ -30,21 +30,21 @@ const Menu: React.FC = () => {
             <div className="menu">
                 <img src={menu} alt="Logo da empresa" width="150" />
                 <div className="buttons3">
-                    <button className="location.href='cadastro_obra.html'"> 
-                        <span className="icon icon-cadastro"></span> 
-                        Cadastro de Obra
+                    <button onClick={() => navigate('/painel/obra')}> 
+                        <span className="icon icon-controle"></span> 
+                        Controle de Obra
                     </button>
-                    <button className="location.href='lista_gerenciamento.html'"> 
+                    <button onClick={() => {navigate('/painel/etapa/obra')}}> 
+                        <span className="icon icon-cadastro"></span>
+                        Controle de Etapas
+                    </button>
+                    <button onClick={() => {navigate('/painel/tipo')}}> 
                         <span className="icon icon-gerenciamento"></span> 
-                        Gerenciamento RUP
+                        Tipos de etapas
                     </button>
                     <button className="location.href='relatorio.html'"> 
                         <span className="icon icon-relatorio"></span> 
                         Relatórios e Dashboards
-                    </button>
-                    <button className="location.href='controle_obra.html'"> 
-                        <span className="icon icon-controle"></span>
-                        Controle de Obra
                     </button>
                     <button className="location.href='calculadora_equipe.html'"> 
                         <span className="icon icon-calculadora"></span>
@@ -52,7 +52,7 @@ const Menu: React.FC = () => {
                     </button>
                     <button onClick={() => navigate('/configuracao')}> 
                         <span className="icon icon-configuracao"></span> 
-                        Configurações
+                        Controle de usuários
                     </button>
                 </div>
                 <div className="logout">

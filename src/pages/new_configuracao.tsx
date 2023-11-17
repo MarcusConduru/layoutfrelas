@@ -35,7 +35,7 @@ const NewConfiguracao: React.FC = () => {
                         navigate('/login')
                         break;
                     default:
-                        alert('Algo de errado aconteceu. Tente novamente mais tarde.')
+                        alert(error.response.data.message.replace('doc name', 'tipo de documento').replace('doc value', 'numero do documento'))
                         break;
                 }
             })
@@ -63,7 +63,7 @@ const NewConfiguracao: React.FC = () => {
             }
         }).then(() => {
             alert('Usuário Criado com sucesso!')
-            navigate(-1)
+            navigate('/configuracao')
         }).catch((error) => {
                 setIsLoading(false)
                 switch (error.response.status) {  
@@ -82,7 +82,7 @@ const NewConfiguracao: React.FC = () => {
     return (
         <div className="container">
             <div className="content">
-                <h1>Editar Usuário</h1>
+                <h1>Novo Usuário</h1>
                 <div className="data-info">
                     <div className="data-observation">
                         <label htmlFor="name">Nome:</label>
@@ -128,7 +128,7 @@ const NewConfiguracao: React.FC = () => {
                 </div>
 
                 <div className="voltar">
-                    <button onClick={() => {navigate(-1)}}>Voltar</button>
+                    <button onClick={() => {navigate('/configuracao')}}>Voltar</button>
                 </div>
             </div>
 

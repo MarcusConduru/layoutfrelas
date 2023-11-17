@@ -4,14 +4,12 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Loading } from '../components';
 
-const Configuracao: React.FC = () => {
-    const [users, setUsers] = useState<any>([])
+const PainelObra: React.FC = () => {
+    const [constructions, setConstructions] = useState<any>([])
     const [isLoading,setIsLoading] = useState(true)
-    const [isClose,setIsClose] = useState(false)
     const [isChange, setIsChange] = useState(false)
-    const [id, setId] = useState('')
-    const [token, setToken] = useState<any>('')
     const navigate = useNavigate()
+    const [token, setToken] = useState<any>('')
 
     useEffect(() => {
         const token = JSON.parse(localStorage.getItem('accessToken') as any)
@@ -22,13 +20,13 @@ const Configuracao: React.FC = () => {
         }
 
         axios.request({
-            url: 'https://rup.lazaro-dev.online/public/api/v1/secure/users',
+            url: 'https://rup.lazaro-dev.online/public/api/v1/secure/constructions/all',
             method: 'GET',
             headers: {
               'authorization': `Bearer ${token.accessToken}`
             }
           }).then((response) => {
-            setUsers(response.data.data)
+            setConstructions(response.data)
             setIsLoading(false)
           }).catch((error) => {
             setIsLoading(false)
@@ -44,17 +42,20 @@ const Configuracao: React.FC = () => {
           })
     }, [isChange])
 
-    const deleteUser = (id: string) => {
+    const changeStatus = (id: string, status: string) => {
+        const data = {
+            status: status === 'PROGRESS' ? 'FINISHED' : 'PROGRESS'
+        }
         setIsLoading(true)
         axios.request({
-            url: `https://rup.lazaro-dev.online/public/api/v1/secure/users/${id}`,
-            method: 'DELETE',
+            url: `https://rup.lazaro-dev.online/public/api/v1/secure/constructions/${id}/handle-status`,
+            method: 'PUT',
+            data,
             headers: {
               'authorization': `Bearer ${token.accessToken}`
             }
-          }).then((response) => {
+          }).then(() => {
             setIsChange(!isChange)
-            setIsClose(false)
           }).catch((error) => {
             setIsLoading(false)
             switch (error.response.status) {  
@@ -72,30 +73,29 @@ const Configuracao: React.FC = () => {
     return (
         <div className="container">
             <div className="content">
-                <h1>Lista de Usuários</h1>
+                <h1>Lista de Obras</h1>
                 <div className="data-info">
                     <div className="data">
-                        <button onClick={() => navigate('/configuracao/novo')}>Criar Usuário</button>
+                        <button onClick={() => navigate('/painel/obra/nova')}>Criar Obra</button>
                     </div>
                     <table>
                         <thead>
                             <tr>
                                 <th>Nome</th>
-                                <th>Email</th>
-                                <th>Tipo</th>
+                                <th>Construtora</th>
+                                <th>Status</th>
                                 <th></th>
                                 <th></th>
                             </tr>
                         </thead>
                 
-                        <tbody id="users-table-body">
-                            {!isLoading && users.map((value: any) => (
+                        <tbody  id="users-table-body">
+                            {!isLoading && constructions.map((value: any) => (
                                 <tr key={value.id}>
                                     <td>{value.name}</td>
-                                    <td>{value.email}</td>
-                                    <td>{value.roles[0].name}</td>
-                                    <td><button onClick={() => navigate(`/configuracao/editar/${value.id}`)}>Editar</button></td>
-                                    <td><button onClick={() => {setIsClose(true); setId(value.id)}}>Apagar</button></td>
+                                    <td>{value.company}</td>
+                                    <td><button onClick={() => changeStatus(value.id, value.status)}>{value.status}</button></td>
+                                    <td><button onClick={() => navigate(`/painel/obra/editar/${value.id}`)}>Editar</button></td>
                                 </tr>
                             ))}
                         </tbody>
@@ -109,19 +109,8 @@ const Configuracao: React.FC = () => {
             </div>
 
             {isLoading && <Loading />}
-
-            {isClose && 
-                <div id="delete" className="loading1">
-                    <div className="close" onClick={() => setIsClose(false)}></div>
-                    <div className="box">
-                        <p>Deseja apagar esse usuário?</p>
-                        <button onClick={() => deleteUser(id)}>Sim</button>
-                        <button onClick={() => setIsClose(false)}>Não</button>
-                    </div>
-                </div>
-            }
         </div>
     );
 }
 
-export default Configuracao;
+export default PainelObra;

@@ -76,7 +76,7 @@ const UpdateConfiguracao: React.FC = () => {
             }
         }).then(() => {
             alert('Usuário alterado com sucesso!')
-            navigate(-1)
+            navigate('/configuracao')
         }).catch((error) => {
                 setIsLoading(false)
                 switch (error.response.status) {  
@@ -85,7 +85,7 @@ const UpdateConfiguracao: React.FC = () => {
                         navigate('/login')
                         break;
                     default:
-                        alert(error.response.data.message)
+                        alert(error.response.data.message.replace('doc name', 'tipo de documento').replace('doc value', 'numero do documento'))
                         break;
                 }
         })
@@ -143,7 +143,7 @@ const UpdateConfiguracao: React.FC = () => {
                 </div>
 
                 <div className="voltar">
-                    <button onClick={() => {navigate(-1)}}>Voltar</button>
+                    <button onClick={() => {navigate('/configuracao')}}>Voltar</button>
                 </div>
             </div>
 

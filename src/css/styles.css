@@ -127,8 +127,8 @@ button:hover {
 
 /* Estilos comuns para telas internas */
 .container {
-    width: 80%;
-    max-width: 700px;
+    width: 90%;
+    max-width: 800px;
     background: #fff;
     padding: 20px;
     border-radius: 10px;
