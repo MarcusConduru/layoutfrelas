@@ -98,7 +98,7 @@ const PainelEstagio: React.FC = () => {
                                     <td>{value.climate}</td>
                                     <td>{value.quantity_service}</td>
                                     <td>{value.work_hours}</td>
-                                    <td><button onClick={() => navigate(`/painel/obra/editar/${value.id}`)}>Editar</button></td>
+                                    <td><button onClick={() => navigate(`/painel/estagio/${id}/editar/${value.id}`)}>Editar</button></td>
                                     <td><button onClick={() => {setIsClose(true); setIds(value.id)}}>Apagar</button></td>
                                 </tr>
                             ))}
