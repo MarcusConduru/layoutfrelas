@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { CadastroObra, Configuracao, Construction, Login, Menu, NewConfiguracao, NewEtapa, NewTipo, PainelEtapa, PainelObra, PainelTipo, UpdateConfiguracao, UpdateEtapa, UpdateObra, UpdateTipo } from '../pages';
+import { CadastroObra, Configuracao, Construction, Login, Menu, NewConfiguracao, NewEstagio, NewEtapa, NewTipo, PainelEstagio, PainelEtapa, PainelObra, PainelTipo, UpdateConfiguracao, UpdateEtapa, UpdateObra, UpdateTipo } from '../pages';
 
 const Router: React.FC = () => {
   return (
@@ -19,6 +19,8 @@ const Router: React.FC = () => {
         <Route path='/painel/etapa/:id/' element={<PainelEtapa />} />
         <Route path='/painel/etapa/:id/novo' element={<NewEtapa />} />
         <Route path='/painel/etapa/editar/:id' element={<UpdateEtapa />} />
+        <Route path='/painel/estagio/:id' element={<PainelEstagio />} />
+        <Route path='/painel/estagio/novo/:id' element={<NewEstagio />} />
         <Route path='/painel/tipo' element={<PainelTipo />} />
         <Route path='/painel/tipo/novo' element={<NewTipo />} />
         <Route path='/painel/tipo/editar/:id' element={<UpdateTipo />} />

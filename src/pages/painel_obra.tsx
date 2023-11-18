@@ -44,7 +44,7 @@ const PainelObra: React.FC = () => {
 
     const changeStatus = (id: string, status: string) => {
         const data = {
-            status: status === 'PROGRESS' ? 'FINISHED' : 'PROGRESS'
+            status: status === 'PROGRESS' ? 'FINISH' : 'PROGRESS'
         }
         setIsLoading(true)
         axios.request({
@@ -94,7 +94,7 @@ const PainelObra: React.FC = () => {
                                 <tr key={value.id}>
                                     <td>{value.name}</td>
                                     <td>{value.company}</td>
-                                    <td><button onClick={() => changeStatus(value.id, value.status)}>{value.status}</button></td>
+                                    <td><button onClick={() => changeStatus(value.id, value.status)}>{value.status === 'PROGRESS' ? 'Em andamento' : 'Finalizado'}</button></td>
                                     <td><button onClick={() => navigate(`/painel/obra/editar/${value.id}`)}>Editar</button></td>
                                 </tr>
                             ))}
