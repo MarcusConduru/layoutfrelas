@@ -63,7 +63,7 @@ const Login: React.FC = () => {
                     <label htmlFor="password">Senha</label>
                     <input type="password" id="password" required name="password" placeholder="Digite sua senha" onChange={e => setpassword(e.currentTarget.value)}/>
                 
-                    <button type="button" id="loginForm" disabled={(!email || !password) ? true : false} onClick={login}>Entrar</button>
+                    <button type="button" disabled={(!email || !password) ? true : false} onClick={login}>Entrar</button>
                 </form>
             </div>
         </div>

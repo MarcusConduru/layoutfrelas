@@ -99,11 +99,11 @@ const Configuracao: React.FC = () => {
                         <tbody id="users-table-body">
                             {!isLoading && users.map((value: any) => (
                                 <tr key={value.id}>
-                                    <td>{value.name}</td>
-                                    <td>{value.email}</td>
-                                    <td>{value.roles[0].name}</td>
-                                    <td><button onClick={() => navigate(`/configuracao/editar/${value.id}`)}>Editar</button></td>
-                                    <td><button onClick={() => {setIsClose(true); setId(value.id)}}>Apagar</button></td>
+                                    <td data-label="Nome">{value.name}</td>
+                                    <td data-label="Email">{value.email}</td>
+                                    <td data-label="Tipo">{value.roles[0].name}</td>
+                                    <td data-label=""><button onClick={() => navigate(`/configuracao/editar/${value.id}`)}>Editar</button></td>
+                                    <td data-label=""><button onClick={() => {setIsClose(true); setId(value.id)}}>Apagar</button></td>
                                 </tr>
                             ))}
                         </tbody>

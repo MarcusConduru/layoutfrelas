@@ -83,27 +83,32 @@ const PainelObra: React.FC = () => {
             <div className="content">
                 <h1>Lista de Obras</h1>
                 <div className="data-info">
-                    <div className="data">
-                        <button onClick={() => navigate('/painel/obra/nova')}>Criar Obra</button>
-                    </div>
+                    {token?.user?.roles[0].name !== 'Visualizador' && (
+                        <div className="data">
+                            <button onClick={() => navigate('/painel/obra/nova')}>Criar Obra</button>
+                        </div>
+                    )}
                     <table>
                         <thead>
                             <tr>
                                 <th>Nome</th>
                                 <th>Construtora</th>
                                 <th>Status</th>
-                                <th></th>
-                                <th></th>
+                                {token?.user?.roles[0].name !== 'Visualizador' && (
+                                    <th></th>
+                                )}
                             </tr>
                         </thead>
                 
                         <tbody  id="users-table-body">
                             {!isLoading && constructions.map((value: any) => (
                                 <tr key={value.id}>
-                                    <td>{value.name}</td>
-                                    <td>{value.company}</td>
-                                    <td><button onClick={() => changeStatus(value.id, value.status)}>{value.status === 'PROGRESS' ? 'Em andamento' : 'Finalizado'}</button></td>
-                                    <td><button onClick={() => navigate(`/painel/obra/editar/${value.id}`)}>Editar</button></td>
+                                    <td data-label="Nome">{value.name}</td>
+                                    <td data-label="Construtora">{value.company}</td>
+                                    <td data-label="Status"><button disabled={token?.user?.roles[0].name !== 'Visualizador' ? false : true} onClick={() => changeStatus(value.id, value.status)}>{value.status === 'PROGRESS' ? 'Em andamento' : 'Finalizado'}</button></td>
+                                    {token?.user?.roles[0].name !== 'Visualizador' && (
+                                        <td data-label=""><button onClick={() => navigate(`/painel/obra/editar/${value.id}`)}>Editar</button></td>
+                                    )}
                                 </tr>
                             ))}
                         </tbody>

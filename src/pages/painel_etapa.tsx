@@ -116,18 +116,26 @@ const PainelEtapa: React.FC = () => {
             <div className="content">
                 <h1>Lista de Etapas</h1>
                 <div className="data-info">
-                    <div className="data">
-                        <button onClick={() => navigate(`/painel/etapa/${id}/novo`)}>Criar Etapa</button>
-                    </div>
+                    {token?.user?.roles[0].name !== 'Visualizador' && (
+                        <div className="data">
+                            <button onClick={() => navigate(`/painel/etapa/${id}/novo`)}>Criar Etapa</button>
+                        </div>
+                    )}
                     <table>
                         <thead>
                             <tr>
                                 <th>Nome</th>
                                 <th>Tipo de etapa</th>
                                 <th>Status</th>
-                                <th>Estagios</th>
-                                <th></th>
-                                <th></th>
+                                {token?.user?.roles[0].name !== 'Visualizador' && (
+                                    <>
+                                        <th>Estagios</th>
+                                        <th></th>
+                                    </>
+                                )}
+                                {token?.user?.roles[0].name === 'Administrador' && (
+                                    <th></th>
+                                )}
                             </tr>
                         </thead>
                 
@@ -136,10 +144,16 @@ const PainelEtapa: React.FC = () => {
                                 <tr key={value.id}>
                                     <td>{value.name}</td>
                                     <td>{value.work_stage_type.name}</td>
-                                    <td><button onClick={() => changeStatus(value.id, value.status)}>{value.status === 'PROGRESS' ? 'Em andamento' : 'Finalizado'}</button></td>
-                                    <td><button onClick={() => navigate(`/painel/estagio/${value.id}`)}>Ver</button></td>
-                                    <td><button onClick={() => navigate(`/painel/etapa/editar/${value.id}`)}>Editar</button></td>
-                                    <td><button onClick={() => {setIsClose(true); setIds(value.id)}}>Apagar</button></td>
+                                    <td><button disabled={token?.user?.roles[0].name !== 'Visualizador' ? false : true} onClick={() => changeStatus(value.id, value.status)}>{value.status === 'PROGRESS' ? 'Em andamento' : 'Finalizado'}</button></td>
+                                    {token?.user?.roles[0].name !== 'Visualizador' && (
+                                        <>
+                                            <td><button onClick={() => navigate(`/painel/estagio/${value.id}`)}>Ver</button></td>
+                                            <td><button onClick={() => navigate(`/painel/etapa/editar/${value.id}`)}>Editar</button></td>
+                                        </>
+                                    )}
+                                    {token?.user?.roles[0].name === 'Administrador' && (
+                                        <td><button onClick={() => {setIsClose(true); setIds(value.id)}}>Apagar</button></td>
+                                    )}
                                 </tr>
                             ))}
                         </tbody>

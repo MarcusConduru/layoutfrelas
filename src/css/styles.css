@@ -124,13 +124,18 @@ button:hover {
     background: #0f1020;
 }
 
+button:disabled {
+    background-color: #a0a0a0 !important;
+    pointer-events: none;
+}
+
 
 /* Estilos comuns para telas internas */
 .container {
-    width: 90%;
-    max-width: 800px;
+    width: 95%;
+    max-width: 1100px;
     background: #fff;
-    padding: 20px;
+    padding: 10px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin: 20px auto; /* Centraliza a caixa */
@@ -164,7 +169,7 @@ button:hover {
 .data-info {
     background-color: #D9D9D9;
     border-radius: 10px;
-    padding: 20px;
+    padding: 10px;
     margin-bottom: 20px;
 }
 
@@ -445,7 +450,148 @@ button:hover {
     flex-direction: column;
 }
 
-#loginForm:disabled {
-    background-color: #cccccc;
-    pointer-events: none;
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table td,
+table th {
+    padding: 12px 15px;
+    border: 1px solid #17182F;
+    text-align: center;
+    font-size: 15px;
+}
+
+table th {
+    background-color: black;
+    color: #ffffff;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: white;
+}
+
+/*responsive*/
+
+@media (max-width: 700px) {
+    table thead {
+        display: none;
+    }
+
+    table,
+    table tbody,
+    table tr,
+    table td {
+        display: block;
+        
+    }
+    table tr {
+        margin-bottom: 15px;
+    }
+    table td {
+        padding-left: 50%;
+        text-align: left;
+        position: relative;
+    }
+    table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 50%;
+        padding-left: 15px;
+        font-size: 14px;
+        font-weight: bold;
+        text-align: left;
+    }
+}
+
+/*responsive relatorio*/
+@media (max-width: 1100px) {
+    .table thead {
+        display: none;
+    }
+
+    .table,
+    .table tbody,
+    .table tr,
+    .table td {
+        display: block;
+        
+    }
+    .table tr {
+        margin-bottom: 15px;
+    }
+    .table td {
+        padding-left: 50%;
+        text-align: left;
+        position: relative;
+    }
+    .table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 50%;
+        padding-left: 15px;
+        font-size: 14px;
+        font-weight: bold;
+        text-align: left;
+    }
+}
+
+.Report__info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    width: 90%;
+    max-width: 1000px;
+    gap: 20px;
+}
+
+.Report__card {
+    color: white;
+    border-radius: 3px;
+    box-shadow: 0px 0px 2px 1px black;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    position: relative;
+}
+
+.Report__card:nth-child(1), .Report__card:nth-child(4) {
+    background-color: #4CAF50;
+}
+
+.Report__card:nth-child(2), .Report__card:nth-child(5) {
+    background-color: #EF5350;
+}
+
+.Report__card:nth-child(3), .Report__card:nth-child(6) {
+    background-color: #009edc;
+}
+
+.Report__card:nth-child(7) {
+    background-color: #ffcc00;
+    color: black;
+}
+
+.Report__box {}
+
+.Report__title {
+    font-size: 23px;
+    margin-bottom: 15px;
+    color: white;
+}
+
+.Report__paragh {
+    font-size: 15px;
+}
+
+.Report__favicon {
+    right: 5%;
+    top: 15%;
+    position: absolute;
+    font-size: 45px;
+    opacity: .4;
 }

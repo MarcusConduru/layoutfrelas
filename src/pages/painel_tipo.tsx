@@ -55,7 +55,7 @@ const PainelTipo: React.FC = () => {
                         <thead>
                             <tr>
                                 <th>Nome</th>
-                                <th>medida unitária</th>
+                                <th>Medida unitária</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -63,9 +63,9 @@ const PainelTipo: React.FC = () => {
                         <tbody  id="users-table-body">
                             {!isLoading && type.map((value: any) => (
                                 <tr key={value.id}>
-                                    <td>{value.name}</td>
-                                    <td>{value.unit_measurement}</td>
-                                    <td><button onClick={() => navigate(`/painel/tipo/editar/${value.id}`)}>Editar</button></td>
+                                    <td data-label="Nome">{value.name}</td>
+                                    <td data-label="Medida unitária">{value.unit_measurement}</td>
+                                    <td data-label=""><button onClick={() => navigate(`/painel/tipo/editar/${value.id}`)}>Editar</button></td>
                                 </tr>
                             ))}
                         </tbody>

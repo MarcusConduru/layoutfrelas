@@ -7,7 +7,7 @@ import axios from 'axios';
 const Construction: React.FC = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [constructions, setConstructions] = useState<any>([])
-    const [select, setSelect] = useState('1')
+    const [select, setSelect] = useState('')
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -33,7 +33,7 @@ const Construction: React.FC = () => {
                         navigate('/login')
                         break;
                     default:
-                        alert(error.response.data.message.replace('doc name', 'tipo de documento').replace('doc value', 'numero do documento'))
+                        alert(error.response.data.message)
                         break;
                 }
             })
@@ -42,18 +42,19 @@ const Construction: React.FC = () => {
     return (
         <div className="container">
             <div className="content">
-                <h1>Obras</h1>
+                <h1>Etapas da Obra</h1>
                 <div className="data-info">
                     <div className="data-observation">
                         <label htmlFor="select">Escolha uma obra:</label>
                         <select id="select" defaultValue={'default'} onChange={(e) => setSelect(e.target.value)}>
+                            <option value='default' disabled>Escolha uma obra</option>
                             {constructions.map((value: any) => (
                                 <option key={value.id} value={value.id}>{value.name}</option>
                             ))}
                         </select>
                     </div>
                     <div className="save-button">
-                        <button onClick={() => {navigate(`/painel/etapa/${select}`)}}>Criar</button>
+                        <button disabled={!select} onClick={() => {navigate(`/painel/etapa/${select}`)}}>Ver Etapas</button>
                     </div>
                 </div>
 

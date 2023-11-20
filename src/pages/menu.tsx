@@ -19,7 +19,7 @@ const Menu: React.FC = () => {
     const logout = () => {
         localStorage.clear()
         navigate('/login')
-      }
+    }
 
     return (
         <div className="container3">
@@ -34,26 +34,32 @@ const Menu: React.FC = () => {
                         <span className="icon icon-controle"></span> 
                         Controle de Obra
                     </button>
-                    <button onClick={() => {navigate('/painel/etapa/obra')}}> 
+                    <button onClick={() => navigate('/painel/etapa/obra')}> 
                         <span className="icon icon-cadastro"></span>
                         Controle de Etapas
                     </button>
-                    <button onClick={() => {navigate('/painel/tipo')}}> 
-                        <span className="icon icon-gerenciamento"></span> 
-                        Tipos de etapas
-                    </button>
-                    <button className="location.href='relatorio.html'"> 
-                        <span className="icon icon-relatorio"></span> 
-                        Relatórios e Dashboards
-                    </button>
-                    <button className="location.href='calculadora_equipe.html'"> 
+                    {token?.user.roles[0].name !== 'Visualizador' && (
+                        <button onClick={() => navigate('/painel/tipo')}> 
+                            <span className="icon icon-gerenciamento"></span> 
+                            Tipos de etapas
+                        </button>
+                    )}
+                    {token?.user.roles[0].name !== 'Comum' && (
+                        <button onClick={() => navigate('/relatorio/tipo')}> 
+                            <span className="icon icon-relatorio"></span> 
+                            Relatórios e Dashboards
+                        </button>
+                    )}
+                    <button onClick={() => navigate('/Calculadora')}> 
                         <span className="icon icon-calculadora"></span>
                         Calculadora de Equipe
                     </button>
-                    <button onClick={() => navigate('/configuracao')}> 
-                        <span className="icon icon-configuracao"></span> 
-                        Controle de usuários
-                    </button>
+                    {token?.user.roles[0].name === 'Administrador' && (
+                        <button onClick={() => navigate('/configuracao')}> 
+                            <span className="icon icon-configuracao"></span> 
+                            Controle de usuários
+                        </button>
+                    )}
                 </div>
                 <div className="logout">
                     <button id="logout" onClick={logout}>Logout</button>

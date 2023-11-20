@@ -39,10 +39,6 @@ const PainelEstagio: React.FC = () => {
                     localStorage.clear()
                     navigate('/login')
                     break;
-                case 440:
-                    localStorage.clear()
-                    navigate('/login')
-                    break;
                 default:
                     alert('Algo de errado aconteceu. Tente novamente mais tarde.')
                     break;
@@ -69,10 +65,6 @@ const PainelEstagio: React.FC = () => {
                     localStorage.clear()
                     navigate('/login')
                     break;
-                case 440:
-                    localStorage.clear()
-                    navigate('/login')
-                    break;
                 default:
                     alert('Algo de errado aconteceu. Tente novamente mais tarde.')
                     break;
@@ -94,9 +86,10 @@ const PainelEstagio: React.FC = () => {
                                 <th>Clima</th>
                                 <th>Serviços</th>
                                 <th>Horas trabalhada</th>
-                                <th>Status</th>
                                 <th></th>
-                                <th></th>
+                                {token?.user?.roles[0].name === 'Administrador' && (
+                                    <th></th>
+                                )}
                             </tr>
                         </thead>
                 
@@ -107,7 +100,9 @@ const PainelEstagio: React.FC = () => {
                                     <td>{value.quantity_service}</td>
                                     <td>{value.work_hours}</td>
                                     <td><button onClick={() => navigate(`/painel/estagio/${id}/editar/${value.id}`)}>Editar</button></td>
-                                    <td><button onClick={() => {setIsClose(true); setIds(value.id)}}>Apagar</button></td>
+                                    {token?.user?.roles[0].name === 'Administrador' && (
+                                        <td><button onClick={() => {setIsClose(true); setIds(value.id)}}>Apagar</button></td>
+                                    )}
                                 </tr>
                             ))}
                         </tbody>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { CadastroObra, Configuracao, Construction, EditStage, Login, Menu, NewConfiguracao, NewEstagio, NewEtapa, NewTipo, PainelEstagio, PainelEtapa, PainelObra, PainelTipo, UpdateConfiguracao, UpdateEtapa, UpdateObra, UpdateTipo } from '../pages';
+import { CadastroObra, CalculadoraEquipe, Configuracao, Construction, Dashboard, EditStage, Login, Menu, NewConfiguracao, NewEstagio, NewEtapa, NewTipo, PainelEstagio, PainelEtapa, PainelObra, PainelTipo, Relatorio, UpdateConfiguracao, UpdateEtapa, UpdateObra, UpdateTipo } from '../pages';
 
 const Router: React.FC = () => {
   return (
@@ -16,7 +16,6 @@ const Router: React.FC = () => {
         <Route path='/painel/obra/editar/:id' element={<UpdateObra />} />
         <Route path='/painel/etapa/obra' element={<Construction />} />
         <Route path='/painel/etapa/:id' element={<PainelEtapa />} />
-        <Route path='/painel/etapa/:id/' element={<PainelEtapa />} />
         <Route path='/painel/etapa/:id/novo' element={<NewEtapa />} />
         <Route path='/painel/etapa/editar/:id' element={<UpdateEtapa />} />
         <Route path='/painel/estagio/:id' element={<PainelEstagio />} />
@@ -25,6 +24,9 @@ const Router: React.FC = () => {
         <Route path='/painel/tipo' element={<PainelTipo />} />
         <Route path='/painel/tipo/novo' element={<NewTipo />} />
         <Route path='/painel/tipo/editar/:id' element={<UpdateTipo />} />
+        <Route path='/relatorio/tipo' element={<Relatorio />} />
+        <Route path='/relatorio/obra/:constructionId/etapa/:workId' element={<Dashboard />} />
+        <Route path='/Calculadora' element={<CalculadoraEquipe />} />
       </Routes>
     </BrowserRouter>
   )
