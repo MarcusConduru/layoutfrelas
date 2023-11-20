@@ -28,6 +28,10 @@ const Construction: React.FC = () => {
                         localStorage.clear()
                         navigate('/login')
                         break;
+                    case 440:
+                        localStorage.clear()
+                        navigate('/login')
+                        break;
                     default:
                         alert(error.response.data.message.replace('doc name', 'tipo de documento').replace('doc value', 'numero do documento'))
                         break;

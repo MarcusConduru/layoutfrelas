@@ -33,6 +33,10 @@ const PainelTipo: React.FC = () => {
                     localStorage.clear()
                     navigate('/login')
                     break;
+                case 440:
+                    localStorage.clear()
+                    navigate('/login')
+                    break;
                 default:
                     alert('Algo de errado aconteceu. Tente novamente mais tarde.')
                     break;

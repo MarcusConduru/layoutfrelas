@@ -49,6 +49,10 @@ const UpdateEtapa: React.FC = () => {
                     localStorage.clear()
                     navigate('/login')
                     break;
+                case 440:
+                    localStorage.clear()
+                    navigate('/login')
+                    break;
                 default:
                     alert(error.response.data.message)
                     break;
@@ -77,6 +81,10 @@ const UpdateEtapa: React.FC = () => {
             setIsLoading(false)
             switch (error.response.status) {  
                 case 404:
+                    localStorage.clear()
+                    navigate('/login')
+                    break;
+                case 440:
                     localStorage.clear()
                     navigate('/login')
                     break;

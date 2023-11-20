@@ -52,6 +52,10 @@ const CadastroObra: React.FC = () => {
                     localStorage.clear()
                     navigate('/login')
                     break;
+                case 440:
+                    localStorage.clear()
+                    navigate('/login')
+                    break;
                 default:
                     alert(error.response.data.message
                         .replace('company', 'construtora')

@@ -37,6 +37,10 @@ const Configuracao: React.FC = () => {
                     localStorage.clear()
                     navigate('/login')
                     break;
+                case 440:
+                    localStorage.clear()
+                    navigate('/login')
+                    break;
                 default:
                     alert('Algo de errado aconteceu. Tente novamente mais tarde.')
                     break;
@@ -59,6 +63,10 @@ const Configuracao: React.FC = () => {
             setIsLoading(false)
             switch (error.response.status) {  
                 case 404:
+                    localStorage.clear()
+                    navigate('/login')
+                    break;
+                case 440:
                     localStorage.clear()
                     navigate('/login')
                     break;
