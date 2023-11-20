@@ -29,7 +29,6 @@ const PainelEstagio: React.FC = () => {
               'authorization': `Bearer ${token.accessToken}`
             }
           }).then((response) => {
-            console.log(response.data)
             setPhase(response.data)
             setIsLoading(false)
           }).catch((error) => {

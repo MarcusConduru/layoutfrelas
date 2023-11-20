@@ -47,7 +47,6 @@ const Dashboard: React.FC = () => {
               'authorization': `Bearer ${token.accessToken}`
             }
           })]).then((response) => {
-            console.log(response[1].data)
             setReport(response[0].data)
             setDashboard(response[1].data)
             setIsLoading(false)
