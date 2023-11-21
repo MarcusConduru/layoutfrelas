@@ -134,7 +134,7 @@ const UpdateEstagio: React.FC = () => {
                 </form>
                 <div className="buttons2">
                     <button onClick={() => navigate(`/painel/estagio/${item}`)}>Voltar</button>
-                    <button onClick={EditStage}>Editar</button>
+                    <button onClick={EditStage}>Salvar</button>
                 </div>
             </div>
             {isLoading && <Loading />}

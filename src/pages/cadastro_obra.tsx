@@ -112,7 +112,7 @@ const CadastroObra: React.FC = () => {
             </form>
             <div className="buttons2">
                 <button onClick={() => navigate('/painel/obra')}>Voltar</button>
-                <button onClick={newConstruction}>Editar</button>
+                <button onClick={newConstruction}>Criar</button>
             </div>
         </div>
         {isLoading && <Loading />}

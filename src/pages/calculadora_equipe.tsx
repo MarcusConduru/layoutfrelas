@@ -151,7 +151,7 @@ const CalculadoraEquipe: React.FC = () => {
             <div className="buttons2">
                 <button onClick={calcularEquipe}>Calcular</button>
                 <button onClick={exportToCSV}>Salvar como CSV</button>
-                <button onClick={() => {}}>Voltar</button>
+                <button onClick={() => navigate('/')}>Voltar</button>
             </div>
 
             <p className="result">Resultado: <span id="resultado">{result ? result : '--'}</span></p>

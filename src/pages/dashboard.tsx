@@ -4,20 +4,49 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Loading } from '../components';
 import { MdAttachMoney } from "react-icons/md";
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts'
+import { CSVLink } from "react-csv";
+
+pdfMake.vfs = pdfFonts.pdfMake.vfs
+export const transformDate = (value:string) => {
+    if(value) {
+      const date = value.split('-')
+      return `${date[2]}/${date[1]}/${date[0]}`
+    }
+}
 
 const Dashboard: React.FC = () => {
     const [report, setReport] = useState<any>([])
     const [dashboard, setDashboard] = useState<any>([])
     const [isLoading,setIsLoading] = useState(true)
+    const [dd, setDD] = useState<any>()
+    const [CSV, SetCSV] = useState([])
     const {workId, constructionId} = useParams()
     const navigate = useNavigate()
 
-    const transformDate = (value:string) => {
-        if(value) {
-          const date = value.split('-')
-          return `${date[2]}/${date[1]}/${date[0]}`
-        }
-      }
+    const createPdf = () => {
+        const pdfGenerator = pdfMake.createPdf(dd)
+        pdfGenerator.download(report?.construction?.name)
+    }
+
+
+    const header = [
+        ['Dia', 'Qt. de homens', 'Jornada', 'Hh', `Qt. de serviço(${report?.work_stage?.work_stage_type?.unit_measurement})`, 'Hh CUM', 'RUP DIÁRIA', 'RUP CUM', 'DIÁRIA < CUM', 'RUP POT', 'Observações', 'Clima']
+    ]
+
+    const headers = [
+        { label: "First Name", key: "firstname" },
+        { label: "Last Name", key: "lastname" },
+        { label: "Email", key: "email" }
+      ];
+      
+      const data = [
+        { firstname: "Ahmed", lastname: "Tomi", email: "ah@smthing.co.com" },
+        { firstname: "Raed", lastname: "Labes", email: "rl@smthing.co.com" },
+        { firstname: "Yezzi", lastname: "Min l3b", email: "ymin@cocococo.com" }
+      ];
+      
 
     useEffect(() => {
         const token = JSON.parse(localStorage.getItem('accessToken') as any)
@@ -49,6 +78,68 @@ const Dashboard: React.FC = () => {
           })]).then((response) => {
             setReport(response[0].data)
             setDashboard(response[1].data)
+            const report = response[0].data?.work_stage?.stages.map((value: any) => {
+                return (`${transformDate(value.observation_date)},${value.number_men},${value.work_hours}, ${value.Hh}, ${value.quantity_service}, ${value.Hh_cumulativo},${value.rup_diaria},${value.rup_cumulativa},${value.rup_diaria_menor_rup_cumulativa === null ? '0' : value.rup_diaria_menor_rup_cumulativa},${value.rup_potencial},${value.observation},${value.climate}`).split(',')
+            })
+
+            const csv = response[0].data?.work_stage?.stages.map((value: any) => {
+                return {
+                    Dia	: transformDate(value.observation_date),
+                    QtDehomens	: value.number_men,
+                    Jornada	: value.work_hours,
+                    Hh	: value.Hh,
+                    QtdeServiço	: value.quantity_service,
+                    HhCUM	: value.Hh_cumulativo,
+                    RUPDIÁRIA	: value.rup_diaria,
+                    RUPCUM	: value.rup_cumulativa,
+                    DIÁRIACUM: value.rup_diaria_menor_rup_cumulativa === null ? '0' : value.rup_diaria_menor_rup_cumulativa,
+                    RUPPOT	: value.rup_potencial,
+                    Observações: value.observation,
+                    Clima: value.climate,
+                }
+            })
+
+            SetCSV(csv)
+
+            setDD({
+                content: [
+                {text: response[0].data?.construction?.name, style: 'header'},
+                {
+                    style: 'tableExample',
+                    table: {
+                        headerRows: 1,
+                        body: [
+                            [{text: 'Dia', style: 'tableHeader'}, {text: 'Qt. de homens', style: 'tableHeader'}, {text: 'Jornada', style: 'tableHeader'},  {text: 'Hh', style: 'tableHeader'},  {text: `Qt. de serviço(${response[0].data?.work_stage?.work_stage_type?.unit_measurement})`, style: 'tableHeader'},  {text: 'Hh CUM', style: 'tableHeader'},  {text: 'RUP DIÁRIA', style: 'tableHeader'}, {text: 'RUP CUM', style: 'tableHeader'}, {text: 'DIÁRIA < CUM', style: 'tableHeader'}, {text: 'RUP POT', style: 'tableHeader'}, {text: 'Observações', style: 'tableHeader'}, {text: 'Clima', style: 'tableHeader'}],
+                            ...report,
+                        ]
+                    },
+                    layout: {
+                        hLineWidth: function (i: any, node: any) {
+                            return (i === 0 || i === node.table.body.length) ? 2 : 1;
+                        },
+                        vLineWidth: function (i: any, node: any) {
+                            return (i === 0 || i === node.table.widths.length) ? 2 : 1;
+                        },
+                        hLineColor: function (i: any, node: any) {
+                            return (i === 0 || i === node.table.body.length) ? 'black' : 'gray';
+                        },
+                        vLineColor: function (i: any, node: any) {
+                            return (i === 0 || i === node.table.widths.length) ? 'black' : 'gray';
+                        },
+                    }
+                }
+                ],
+                styles: {
+                    tableExample: {
+                        fontSize: 7,
+                    },
+                    header: {
+                        fontSize: 18,
+                        bold: true,
+                        margin: [0, 0, 0, 10],
+                    }
+                }
+            })
             setIsLoading(false)
           }).catch((error) => {
             setIsLoading(false)
@@ -71,7 +162,13 @@ const Dashboard: React.FC = () => {
     return (
         <div className="container">
             <div className="content">
-                <h1>Relatorio da obra {report?.construction?.name}</h1>
+                <h1>Relatorio da obra {report?.construction?.name} 
+                    <button onClick={createPdf} className='csv'>Gerar PDF</button>  
+                    <CSVLink data={CSV} className='csv'>
+                        <button onClick={() => navigate('/relatorio/tipo')}>Gerar CSV</button>
+                    </CSVLink>
+                </h1>
+
                 <div className="data-info">
                     <table className='table'>
                         <thead>
@@ -191,10 +288,10 @@ const Dashboard: React.FC = () => {
                         </div>
                     </div>
                 )}
-                            
                 <div className="voltar">
-                    <button onClick={() => {navigate('/')}}>Voltar</button>
+                    <button onClick={() => navigate('/relatorio/tipo')}>Voltar</button>
                 </div>
+                            
             </div>
 
             {isLoading && <Loading />}

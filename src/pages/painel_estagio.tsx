@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Loading } from '../components';
+import { transformDate } from './dashboard';
 
 const PainelEstagio: React.FC = () => {
     const [phase, setPhase] = useState<any>([])
@@ -12,7 +13,7 @@ const PainelEstagio: React.FC = () => {
     const [token, setToken] = useState<any>('')
     const [isClose,setIsClose] = useState(false)
     const [ids, setIds] = useState('')
-    const { id } = useParams()
+    const { id, item, name } = useParams()
 
     useEffect(() => {
         const token = JSON.parse(localStorage.getItem('accessToken') as any)
@@ -30,6 +31,7 @@ const PainelEstagio: React.FC = () => {
             }
           }).then((response) => {
             setPhase(response.data)
+            console.log(response.data)
             setIsLoading(false)
           }).catch((error) => {
             setIsLoading(false)
@@ -74,17 +76,17 @@ const PainelEstagio: React.FC = () => {
     return (
         <div className="container">
             <div className="content">
-                <h1>Lista de Estagios</h1>
+                <h1>Observações Diárias</h1>
                 <div className="data-info">
                     <div className="data">
-                        <button onClick={() => navigate(`/painel/estagio/novo/${id}`)}>Criar Estagio</button>
+                        <button onClick={() => navigate(`/painel/estagio/novo/${id}`)}>Criar Observação Diária</button>
                     </div>
                     <table>
                         <thead>
                             <tr>
-                                <th>Clima</th>
-                                <th>Serviços</th>
-                                <th>Horas trabalhada</th>
+                                <th>Nome da etapa</th>
+                                <th>Data de observação</th>
+                                <th>Quantidade de Homens</th>
                                 <th></th>
                                 {token?.user?.roles[0].name === 'Administrador' && (
                                     <th></th>
@@ -95,9 +97,9 @@ const PainelEstagio: React.FC = () => {
                         <tbody  id="users-table-body">
                             {!isLoading && phase.map((value: any) => (
                                 <tr key={value.id}>
-                                    <td>{value.climate}</td>
-                                    <td>{value.quantity_service}</td>
-                                    <td>{value.work_hours}</td>
+                                    <td>{name}</td>
+                                    <td>{transformDate(value.observation_date)}</td>
+                                    <td>{value.number_men}</td>
                                     <td><button onClick={() => navigate(`/painel/estagio/${id}/editar/${value.id}`)}>Editar</button></td>
                                     {token?.user?.roles[0].name === 'Administrador' && (
                                         <td><button onClick={() => {setIsClose(true); setIds(value.id)}}>Apagar</button></td>
@@ -110,7 +112,7 @@ const PainelEstagio: React.FC = () => {
 
 
                 <div className="voltar">
-                    <button onClick={() => {navigate('/')}}>Voltar</button>
+                    <button onClick={() => {navigate(`/painel/etapa/${item}`)}}>Voltar</button>
                 </div>
             </div>
 
@@ -119,7 +121,7 @@ const PainelEstagio: React.FC = () => {
                 <div id="delete" className="loading1">
                     <div className="close" onClick={() => setIsClose(false)}></div>
                     <div className="box">
-                        <p>Deseja apagar esse usuário?</p>
+                        <p>Deseja apagar essa Observação Diárias?</p>
                         <button onClick={() => deleteStage(ids)}>Sim</button>
                         <button onClick={() => setIsClose(false)}>Não</button>
                     </div>

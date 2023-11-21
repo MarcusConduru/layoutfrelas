@@ -85,7 +85,7 @@ const UpdateTipo: React.FC = () => {
     return (
         <div className="container">
             <div className="content">
-                <h1>Criar tipo de etapa</h1>
+                <h1>Editar tipo de etapa</h1>
                 <form>
                     <div className="data-observation">
                         <label htmlFor="construtora">Nome do tipo da etapa:</label>
@@ -98,7 +98,7 @@ const UpdateTipo: React.FC = () => {
                 </form>
                 <div className="buttons2">
                     <button onClick={() => navigate('/painel/tipo')}>Voltar</button>
-                    <button onClick={EditStage}>Editar</button>
+                    <button onClick={EditStage}>Salvar</button>
                 </div>
             </div>
             {isLoading && <Loading />}

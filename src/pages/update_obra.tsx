@@ -146,7 +146,7 @@ const UpdateObra: React.FC = () => {
                 </form>
                 <div className="buttons2">
                     <button onClick={() => navigate('/painel/obra')}>Voltar</button>
-                    <button onClick={editConstruction}>Editar</button>
+                    <button onClick={editConstruction}>Salvar</button>
                 </div>
             </div>
             {isLoading && <Loading />}

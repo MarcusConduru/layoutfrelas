@@ -117,7 +117,7 @@ const UpdateEtapa: React.FC = () => {
                 </form>
                 <div className="buttons2">
                     <button onClick={() => navigate(-1)}>Voltar</button>
-                    <button onClick={NewStage}>Editar</button>
+                    <button onClick={NewStage}>Salavr</button>
                 </div>
             </div>
             {isLoading && <Loading />}

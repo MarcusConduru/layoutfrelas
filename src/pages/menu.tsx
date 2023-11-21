@@ -25,7 +25,7 @@ const Menu: React.FC = () => {
         <div className="container3">
             <div className="top-bar">
                 <div className="help">Ajuda</div>
-                <div className="user" id="name">{token?.user.name}</div>
+                <div className="user" id="name">Olá, {token?.user.name}</div>
             </div>
             <div className="menu">
                 <img src={menu} alt="Logo da empresa" width="150" />
@@ -36,7 +36,7 @@ const Menu: React.FC = () => {
                     </button>
                     <button onClick={() => navigate('/painel/etapa/obra')}> 
                         <span className="icon icon-cadastro"></span>
-                        Controle de Etapas
+                        Gerenciamento RUP
                     </button>
                     {token?.user.roles[0].name !== 'Visualizador' && (
                         <button onClick={() => navigate('/painel/tipo')}> 

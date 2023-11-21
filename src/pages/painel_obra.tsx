@@ -10,6 +10,9 @@ const PainelObra: React.FC = () => {
     const [isChange, setIsChange] = useState(false)
     const navigate = useNavigate()
     const [token, setToken] = useState<any>('')
+    const [isClose,setIsClose] = useState(false)
+    const [id, setId] = useState('')
+    const [status, setStatus] = useState('')
 
     useEffect(() => {
         const token = JSON.parse(localStorage.getItem('accessToken') as any)
@@ -28,6 +31,7 @@ const PainelObra: React.FC = () => {
           }).then((response) => {
             setConstructions(response.data)
             setIsLoading(false)
+            setIsClose(false)
           }).catch((error) => {
             setIsLoading(false)
             switch (error.response.status) {  
@@ -46,7 +50,7 @@ const PainelObra: React.FC = () => {
           })
     }, [isChange])
 
-    const changeStatus = (id: string, status: string) => {
+    const changeStatus = () => {
         const data = {
             status: status === 'PROGRESS' ? 'FINISH' : 'PROGRESS'
         }
@@ -95,7 +99,10 @@ const PainelObra: React.FC = () => {
                                 <th>Construtora</th>
                                 <th>Status</th>
                                 {token?.user?.roles[0].name !== 'Visualizador' && (
-                                    <th></th>
+                                    <>
+                                        <th></th>
+                                        <th></th>
+                                    </>
                                 )}
                             </tr>
                         </thead>
@@ -105,15 +112,30 @@ const PainelObra: React.FC = () => {
                                 <tr key={value.id}>
                                     <td data-label="Nome">{value.name}</td>
                                     <td data-label="Construtora">{value.company}</td>
-                                    <td data-label="Status"><button disabled={token?.user?.roles[0].name !== 'Visualizador' ? false : true} onClick={() => changeStatus(value.id, value.status)}>{value.status === 'PROGRESS' ? 'Em andamento' : 'Finalizado'}</button></td>
+                                    <td style={{ color: value.status === 'PROGRESS' ? '#da2320' : '#16921c' }}>{value.status === 'PROGRESS' ? 'Em andamento' : 'Finalizado'}</td>
                                     {token?.user?.roles[0].name !== 'Visualizador' && (
-                                        <td data-label=""><button onClick={() => navigate(`/painel/obra/editar/${value.id}`)}>Editar</button></td>
+                                        <>
+                                            <td data-label=""><button onClick={() => navigate(`/painel/obra/editar/${value.id}`)}>Editar</button></td>
+                                            <td data-label="Status"><button disabled={token?.user?.roles[0].name !== 'Visualizador' ? false : true} onClick={() => {setIsClose(true); setId(value.id); setStatus(value.status)}}>{value.status === 'PROGRESS' ? 'Encerrar' : 'Encerrado'}</button></td>
+                                        </>
                                     )}
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 </div>
+
+                
+                {isClose && 
+                    <div id="delete" className="loading1">
+                        <div className="close" onClick={() => setIsClose(false)}></div>
+                        <div className="box">
+                            <p>Deseja encerrar essa obra?</p>
+                            <button onClick={() => changeStatus()}>Sim</button>
+                            <button onClick={() => setIsClose(false)}>Não</button>
+                        </div>
+                    </div>
+                }
 
 
                 <div className="voltar">

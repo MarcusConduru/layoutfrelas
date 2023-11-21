@@ -12,7 +12,10 @@ const PainelEtapa: React.FC = () => {
     const [isChange, setIsChange] = useState(false)
     const [token, setToken] = useState<any>('')
     const [isClose,setIsClose] = useState(false)
+    const [isStage,setIsStage] = useState(false)
     const [ids, setIds] = useState('')
+    const [status, setStatus] = useState('')
+    const [stageId, setStageId] = useState('')
 
     useEffect(() => {
         const token = JSON.parse(localStorage.getItem('accessToken') as any)
@@ -57,9 +60,10 @@ const PainelEtapa: React.FC = () => {
             headers: {
               'authorization': `Bearer ${token.accessToken}`
             }
-          }).then((response) => {
+          }).then(() => {
             setIsChange(!isChange)
             setIsClose(false)
+            setIsStage(false)
           }).catch((error) => {
             setIsLoading(false)
             switch (error.response.status) {  
@@ -78,13 +82,14 @@ const PainelEtapa: React.FC = () => {
           })
     }
 
-    const changeStatus = (id: string, status: string) => {
+    const changeStatus = () => {
+        console.log(status)
         const data = {
             status: status === 'PROGRESS' ? 'FINISH' : 'PROGRESS'
         }
         setIsLoading(true)
         axios.request({
-            url: `https://rup.lazaro-dev.online/public/api/v1/secure/work-stages/${id}/handle-status`,
+            url: `https://rup.lazaro-dev.online/public/api/v1/secure/work-stages/${stageId}/handle-status`,
             method: 'PUT',
             data,
             headers: {
@@ -95,14 +100,14 @@ const PainelEtapa: React.FC = () => {
           }).catch((error) => {
             setIsLoading(false)
             switch (error.response.status) {  
-                case 404:
-                    localStorage.clear()
-                    navigate('/login')
-                    break;
-                case 440:
-                    localStorage.clear()
-                    navigate('/login')
-                    break;
+                // case 404:
+                //     localStorage.clear()
+                //     navigate('/login')
+                //     break;
+                // case 440:
+                //     localStorage.clear()
+                //     navigate('/login')
+                //     break;
                 default:
                     alert('Algo de errado aconteceu. Tente novamente mais tarde.')
                     break;
@@ -113,7 +118,7 @@ const PainelEtapa: React.FC = () => {
     return (
         <div className="container">
             <div className="content">
-                <h1>Lista de Etapas</h1>
+                <h1>Gerenciamento RUP</h1>
                 <div className="data-info">
                     {token?.user?.roles[0].name !== 'Visualizador' && (
                         <div className="data">
@@ -128,7 +133,8 @@ const PainelEtapa: React.FC = () => {
                                 <th>Status</th>
                                 {token?.user?.roles[0].name !== 'Visualizador' && (
                                     <>
-                                        <th>Estagios</th>
+                                        <th>Observações diárias</th>
+                                        <th></th>
                                         <th></th>
                                     </>
                                 )}
@@ -137,17 +143,18 @@ const PainelEtapa: React.FC = () => {
                                 )}
                             </tr>
                         </thead>
-                
+
                         <tbody  id="users-table-body">
                             {!isLoading && stage.map((value: any) => (
                                 <tr key={value.id}>
                                     <td>{value.name}</td>
                                     <td>{value.work_stage_type.name}</td>
-                                    <td><button disabled={token?.user?.roles[0].name !== 'Visualizador' ? false : true} onClick={() => changeStatus(value.id, value.status)}>{value.status === 'PROGRESS' ? 'Em andamento' : 'Finalizado'}</button></td>
+                                    <td style={{ color: value.status === 'PROGRESS' ? '#da2320' : '#16921c' }}>{value.status === 'PROGRESS' ? 'Em andamento' : 'Finalizado'}</td>
                                     {token?.user?.roles[0].name !== 'Visualizador' && (
                                         <>
-                                            <td><button onClick={() => navigate(`/painel/estagio/${value.id}`)}>Ver</button></td>
+                                            <td><button onClick={() => navigate(`/painel/estagio/${value.id}/${value.name.replace(' ', '')}/${id}`)}>Alimentar</button></td>
                                             <td><button onClick={() => navigate(`/painel/etapa/editar/${value.id}`)}>Editar</button></td>
+                                            <td><button disabled={value.status === 'PROGRESS' ? false : true} onClick={() => {setIsStage(true); setStatus(value.status); setStageId(value.id)}}>{value.status === 'PROGRESS' ? 'Encerrar' : 'Encerrado'}</button></td>
                                         </>
                                     )}
                                     {token?.user?.roles[0].name === 'Administrador' && (
@@ -171,9 +178,20 @@ const PainelEtapa: React.FC = () => {
                 <div id="delete" className="loading1">
                     <div className="close" onClick={() => setIsClose(false)}></div>
                     <div className="box">
-                        <p>Deseja apagar esse usuário?</p>
+                        <p>Deseja apagar essa etapa?</p>
                         <button onClick={() => deleteStage(ids)}>Sim</button>
                         <button onClick={() => setIsClose(false)}>Não</button>
+                    </div>
+                </div>
+            }
+
+            {isStage && 
+                <div id="delete" className="loading1">
+                    <div className="close" onClick={() => setIsStage(false)}></div>
+                    <div className="box">
+                        <p>Deseja encerrar essa etapa?</p>
+                        <button onClick={() => changeStatus()}>Sim</button>
+                        <button onClick={() => setIsStage(false)}>Não</button>
                     </div>
                 </div>
             }
