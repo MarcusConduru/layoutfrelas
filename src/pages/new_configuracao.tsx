@@ -47,6 +47,7 @@ const NewConfiguracao: React.FC = () => {
 
     const newUser = () => {
         const token = JSON.parse(localStorage.getItem('accessToken') as any)
+        setIsLoading(true)
         const data = {
             name,
             email,

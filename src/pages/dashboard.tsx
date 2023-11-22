@@ -30,24 +30,6 @@ const Dashboard: React.FC = () => {
         pdfGenerator.download(report?.construction?.name)
     }
 
-
-    const header = [
-        ['Dia', 'Qt. de homens', 'Jornada', 'Hh', `Qt. de serviço(${report?.work_stage?.work_stage_type?.unit_measurement})`, 'Hh CUM', 'RUP DIÁRIA', 'RUP CUM', 'DIÁRIA < CUM', 'RUP POT', 'Observações', 'Clima']
-    ]
-
-    const headers = [
-        { label: "First Name", key: "firstname" },
-        { label: "Last Name", key: "lastname" },
-        { label: "Email", key: "email" }
-      ];
-      
-      const data = [
-        { firstname: "Ahmed", lastname: "Tomi", email: "ah@smthing.co.com" },
-        { firstname: "Raed", lastname: "Labes", email: "rl@smthing.co.com" },
-        { firstname: "Yezzi", lastname: "Min l3b", email: "ymin@cocococo.com" }
-      ];
-      
-
     useEffect(() => {
         const token = JSON.parse(localStorage.getItem('accessToken') as any)
         const params = {
@@ -79,21 +61,22 @@ const Dashboard: React.FC = () => {
             setReport(response[0].data)
             setDashboard(response[1].data)
             const report = response[0].data?.work_stage?.stages.map((value: any) => {
-                return (`${transformDate(value.observation_date)},${value.number_men},${value.work_hours}, ${value.Hh}, ${value.quantity_service}, ${value.Hh_cumulativo},${value.rup_diaria},${value.rup_cumulativa},${value.rup_diaria_menor_rup_cumulativa === null ? '0' : value.rup_diaria_menor_rup_cumulativa},${value.rup_potencial},${value.observation},${value.climate}`).split(',')
+                return (`${transformDate(value.observation_date)},${value.number_men},${value.work_hours}, ${value.Hh}, ${value.quantity_service}, ${value.Hh_cumulativo}, ${value.Qs_cumulativo},${value.rup_diaria},${value.rup_cumulativa},${value.rup_diaria_menor_rup_cumulativa === null ? '0' : value.rup_diaria_menor_rup_cumulativa},${value.rup_potencial},${value.observation},${value.climate}`).split(',')
             })
 
             const csv = response[0].data?.work_stage?.stages.map((value: any) => {
                 return {
-                    Dia	: transformDate(value.observation_date),
-                    QtDehomens	: value.number_men,
-                    Jornada	: value.work_hours,
-                    Hh	: value.Hh,
-                    QtdeServiço	: value.quantity_service,
-                    HhCUM	: value.Hh_cumulativo,
-                    RUPDIÁRIA	: value.rup_diaria,
-                    RUPCUM	: value.rup_cumulativa,
+                    Dia: transformDate(value.observation_date),
+                    QtDehomens: value.number_men,
+                    Jornada: value.work_hours,
+                    Hh: value.Hh,
+                    QtdeServiço: value.quantity_service,
+                    HhCUM: value.Hh_cumulativo,
+                    QsCUM: value.Qs_cumulativo,
+                    RUPDIÁRIA: value.rup_diaria,
+                    RUPCUM: value.rup_cumulativa,
                     DIÁRIACUM: value.rup_diaria_menor_rup_cumulativa === null ? '0' : value.rup_diaria_menor_rup_cumulativa,
-                    RUPPOT	: value.rup_potencial,
+                    RUPPOT: value.rup_potencial,
                     Observações: value.observation,
                     Clima: value.climate,
                 }
@@ -109,7 +92,7 @@ const Dashboard: React.FC = () => {
                     table: {
                         headerRows: 1,
                         body: [
-                            [{text: 'Dia', style: 'tableHeader'}, {text: 'Qt. de homens', style: 'tableHeader'}, {text: 'Jornada', style: 'tableHeader'},  {text: 'Hh', style: 'tableHeader'},  {text: `Qt. de serviço(${response[0].data?.work_stage?.work_stage_type?.unit_measurement})`, style: 'tableHeader'},  {text: 'Hh CUM', style: 'tableHeader'},  {text: 'RUP DIÁRIA', style: 'tableHeader'}, {text: 'RUP CUM', style: 'tableHeader'}, {text: 'DIÁRIA < CUM', style: 'tableHeader'}, {text: 'RUP POT', style: 'tableHeader'}, {text: 'Observações', style: 'tableHeader'}, {text: 'Clima', style: 'tableHeader'}],
+                            [{text: 'Dia', style: 'tableHeader'}, {text: 'Qt. de homens', style: 'tableHeader'}, {text: 'Jornada', style: 'tableHeader'},  {text: 'Hh', style: 'tableHeader'},  {text: `Qt. de serviço(${response[0].data?.work_stage?.work_stage_type?.unit_measurement})`, style: 'tableHeader'},  {text: 'Hh CUM', style: 'tableHeader'}, {text: 'Qs CUM', style: 'tableHeader'},  {text: 'RUP DIÁRIA', style: 'tableHeader'}, {text: 'RUP CUM', style: 'tableHeader'}, {text: 'DIÁRIA < CUM', style: 'tableHeader'}, {text: 'RUP POT', style: 'tableHeader'}, {text: 'Observações', style: 'tableHeader'}, {text: 'Clima', style: 'tableHeader'}],
                             ...report,
                         ]
                     },
@@ -213,6 +196,7 @@ const Dashboard: React.FC = () => {
                                 <th>Hh</th>
                                 <th>Qt. de serviço({report?.work_stage?.work_stage_type?.unit_measurement})</th>
                                 <th>Hh CUM</th>
+                                <th>Qs CUM</th>
                                 <th>RUP DIÁRIA</th>
                                 <th>RUP CUM</th>
                                 <th>{`DIÁRIA < CUM`}</th>
@@ -231,6 +215,7 @@ const Dashboard: React.FC = () => {
                                     <td data-label="Hh">{value.Hh}</td>
                                     <td data-label={`Qt. de serviço(${report?.work_stage?.work_stage_type?.unit_measurement})`}>{value.quantity_service}</td>
                                     <td data-label="Hh CUM">{value.Hh_cumulativo}</td>
+                                    <td data-label="Qs CUM">{value.Qs_cumulativo}</td>
                                     <td data-label="RUP DIÁRIA">{value.rup_diaria}</td>
                                     <td data-label="RUP CUM">{value.rup_cumulativa}</td>
                                     <td data-label="DIÁRIA < CUM">{value.rup_diaria_menor_rup_cumulativa}</td>

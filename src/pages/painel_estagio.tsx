@@ -31,7 +31,6 @@ const PainelEstagio: React.FC = () => {
             }
           }).then((response) => {
             setPhase(response.data)
-            console.log(response.data)
             setIsLoading(false)
           }).catch((error) => {
             setIsLoading(false)

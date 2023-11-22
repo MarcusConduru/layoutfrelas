@@ -52,10 +52,10 @@ const PainelEtapa: React.FC = () => {
           })
     }, [isChange])
 
-    const deleteStage = (id: string) => {
+    const deleteStage = () => {
         setIsLoading(true)
         axios.request({
-            url: `https://rup.lazaro-dev.online/public/api/v1/secure/work-stages/${id}`,
+            url: `https://rup.lazaro-dev.online/public/api/v1/secure/work-stages/${ids}`,
             method: 'DELETE',
             headers: {
               'authorization': `Bearer ${token.accessToken}`
@@ -63,7 +63,6 @@ const PainelEtapa: React.FC = () => {
           }).then(() => {
             setIsChange(!isChange)
             setIsClose(false)
-            setIsStage(false)
           }).catch((error) => {
             setIsLoading(false)
             switch (error.response.status) {  
@@ -83,7 +82,6 @@ const PainelEtapa: React.FC = () => {
     }
 
     const changeStatus = () => {
-        console.log(status)
         const data = {
             status: status === 'PROGRESS' ? 'FINISH' : 'PROGRESS'
         }
@@ -96,18 +94,20 @@ const PainelEtapa: React.FC = () => {
               'authorization': `Bearer ${token.accessToken}`
             }
           }).then(() => {
+            setIsStage(false)
             setIsChange(!isChange)
           }).catch((error) => {
             setIsLoading(false)
+            setIsStage(false)
             switch (error.response.status) {  
-                // case 404:
-                //     localStorage.clear()
-                //     navigate('/login')
-                //     break;
-                // case 440:
-                //     localStorage.clear()
-                //     navigate('/login')
-                //     break;
+                case 404:
+                    localStorage.clear()
+                    navigate('/login')
+                    break;
+                case 440:
+                    localStorage.clear()
+                    navigate('/login')
+                    break;
                 default:
                     alert('Algo de errado aconteceu. Tente novamente mais tarde.')
                     break;
@@ -179,7 +179,7 @@ const PainelEtapa: React.FC = () => {
                     <div className="close" onClick={() => setIsClose(false)}></div>
                     <div className="box">
                         <p>Deseja apagar essa etapa?</p>
-                        <button onClick={() => deleteStage(ids)}>Sim</button>
+                        <button onClick={() => deleteStage()}>Sim</button>
                         <button onClick={() => setIsClose(false)}>Não</button>
                     </div>
                 </div>

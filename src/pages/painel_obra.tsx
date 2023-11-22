@@ -12,7 +12,8 @@ const PainelObra: React.FC = () => {
     const [token, setToken] = useState<any>('')
     const [isClose,setIsClose] = useState(false)
     const [id, setId] = useState('')
-    const [status, setStatus] = useState('')
+    const [ids, setIds] = useState('')
+    const [isStage,setIsStage] = useState(false)
 
     useEffect(() => {
         const token = JSON.parse(localStorage.getItem('accessToken') as any)
@@ -31,7 +32,6 @@ const PainelObra: React.FC = () => {
           }).then((response) => {
             setConstructions(response.data)
             setIsLoading(false)
-            setIsClose(false)
           }).catch((error) => {
             setIsLoading(false)
             switch (error.response.status) {  
@@ -51,19 +51,45 @@ const PainelObra: React.FC = () => {
     }, [isChange])
 
     const changeStatus = () => {
-        const data = {
-            status: status === 'PROGRESS' ? 'FINISH' : 'PROGRESS'
-        }
         setIsLoading(true)
         axios.request({
             url: `https://rup.lazaro-dev.online/public/api/v1/secure/constructions/${id}/handle-status`,
             method: 'PUT',
-            data,
             headers: {
               'authorization': `Bearer ${token.accessToken}`
             }
           }).then(() => {
             setIsChange(!isChange)
+            setIsStage(false)
+          }).catch((error) => {
+            setIsLoading(false)
+            switch (error.response.status) {  
+                case 404:
+                    localStorage.clear()
+                    navigate('/login')
+                    break;
+                case 440:
+                    localStorage.clear()
+                    navigate('/login')
+                    break;
+                default:
+                    alert('Algo de errado aconteceu. Tente novamente mais tarde.')
+                    break;
+            }
+          })
+    }
+
+    const deleteConstruction = () => {
+        setIsLoading(true)
+        axios.request({
+            url: `https://rup.lazaro-dev.online/public/api/v1/secure/constructions/${ids}`,
+            method: 'DELETE',
+            headers: {
+              'authorization': `Bearer ${token.accessToken}`
+            }
+          }).then(() => {
+            setIsChange(!isChange)
+            setIsClose(false)
           }).catch((error) => {
             setIsLoading(false)
             switch (error.response.status) {  
@@ -104,6 +130,9 @@ const PainelObra: React.FC = () => {
                                         <th></th>
                                     </>
                                 )}
+                                {token?.user?.roles[0].name === 'Administrador' && (
+                                    <th></th>
+                                )}
                             </tr>
                         </thead>
                 
@@ -116,8 +145,11 @@ const PainelObra: React.FC = () => {
                                     {token?.user?.roles[0].name !== 'Visualizador' && (
                                         <>
                                             <td data-label=""><button onClick={() => navigate(`/painel/obra/editar/${value.id}`)}>Editar</button></td>
-                                            <td data-label="Status"><button disabled={token?.user?.roles[0].name !== 'Visualizador' ? false : true} onClick={() => {setIsClose(true); setId(value.id); setStatus(value.status)}}>{value.status === 'PROGRESS' ? 'Encerrar' : 'Encerrado'}</button></td>
+                                            <td data-label="Status"><button disabled={value.status === 'PROGRESS' ? false : true} onClick={() => {setIsStage(true); setId(value.id);}}>{value.status === 'PROGRESS' ? 'Encerrar' : 'Encerrado'}</button></td>
                                         </>
+                                    )}
+                                    {token?.user?.roles[0].name === 'Administrador' && (
+                                        <td><button onClick={() => {setIsClose(true); setIds(value.id)}}>Apagar</button></td>
                                     )}
                                 </tr>
                             ))}
@@ -130,12 +162,23 @@ const PainelObra: React.FC = () => {
                     <div id="delete" className="loading1">
                         <div className="close" onClick={() => setIsClose(false)}></div>
                         <div className="box">
-                            <p>Deseja encerrar essa obra?</p>
-                            <button onClick={() => changeStatus()}>Sim</button>
+                            <p>Deseja apagar essa obra?</p>
+                            <button onClick={() => deleteConstruction()}>Sim</button>
                             <button onClick={() => setIsClose(false)}>Não</button>
                         </div>
                     </div>
                 }
+
+            {isStage && 
+                <div id="delete" className="loading1">
+                    <div className="close" onClick={() => setIsStage(false)}></div>
+                    <div className="box">
+                        <p>Deseja encerrar essa obra?</p>
+                        <button onClick={() => changeStatus()}>Sim</button>
+                        <button onClick={() => setIsStage(false)}>Não</button>
+                    </div>
+                </div>
+            }
 
 
                 <div className="voltar">

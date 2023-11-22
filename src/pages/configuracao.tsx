@@ -56,7 +56,7 @@ const Configuracao: React.FC = () => {
             headers: {
               'authorization': `Bearer ${token.accessToken}`
             }
-          }).then((response) => {
+          }).then(() => {
             setIsChange(!isChange)
             setIsClose(false)
           }).catch((error) => {
