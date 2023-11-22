@@ -27,7 +27,7 @@ const Dashboard: React.FC = () => {
 
     const createPdf = () => {
         const pdfGenerator = pdfMake.createPdf(dd)
-        pdfGenerator.download(report?.construction?.name)
+        pdfGenerator.download(`Relatório ${report?.construction?.name}`)
     }
 
     useEffect(() => {
@@ -86,7 +86,7 @@ const Dashboard: React.FC = () => {
 
             setDD({
                 content: [
-                {text: response[0].data?.construction?.name, style: 'header'},
+                {text: `Relatório ${response[0].data?.construction?.name}`, style: 'header'},
                 {
                     style: 'tableExample',
                     table: {
@@ -145,10 +145,10 @@ const Dashboard: React.FC = () => {
     return (
         <div className="container">
             <div className="content">
-                <h1>Relatorio da obra {report?.construction?.name} 
+                <h1>Relatório da obra {report?.construction?.name} 
                     <button onClick={createPdf} className='csv'>Gerar PDF</button>  
-                    <CSVLink data={CSV} className='csv'>
-                        <button onClick={() => navigate('/relatorio/tipo')}>Gerar CSV</button>
+                    <CSVLink data={CSV} className='csv' filename={`Relatório ${report?.construction?.name}`}>
+                        <button onClick={() => {}}>Gerar CSV</button>
                     </CSVLink>
                 </h1>
 
