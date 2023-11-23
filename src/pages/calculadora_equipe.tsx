@@ -10,18 +10,14 @@ const CalculadoraEquipe: React.FC = () => {
     const [RUP, setRUP] = useState('')
     const [result, setResult] = useState('')
     const [constructions, setConstructions] = useState<any>([])
-    const [work, setWork] = useState<any>([])
-    const [selectConstructions, setSelectConstructions] = useState('')
     const [selectWork, setSelectWork] = useState('')
-    const [token, setToken] = useState<any>()
     const [isLoading, setIsLoading] = useState(true)
     const navigate = useNavigate()
 
     useEffect(() => {
         const token = JSON.parse(localStorage.getItem('accessToken') as any)
-        setToken(token)
         axios.request({
-            url: 'https://rup.lazaro-dev.online/public/api/v1/secure/constructions/all',
+            url: 'https://rup.lazaro-dev.online/public/api/v1/secure/work-stage-types/all',
             method: 'GET',
             headers: {
               'authorization': `Bearer ${token.accessToken}`
@@ -47,36 +43,6 @@ const CalculadoraEquipe: React.FC = () => {
             })
     }, [])
 
-    const listWorks = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectConstructions(e.target.value)
-        setIsLoading(true)
-        axios.request({
-            url: `https://rup.lazaro-dev.online/public/api/v1/secure/constructions/${e.target.value}/work-stages`,
-            method: 'GET',
-            headers: {
-              'authorization': `Bearer ${token.accessToken}`
-            }
-          }).then((response) => {
-                setWork(response.data)
-                setIsLoading(false)
-          }).catch((error) => {
-                setIsLoading(false)
-                switch (error.response.status) {  
-                    case 404:
-                        localStorage.clear()
-                        navigate('/login')
-                        break;
-                    case 440:
-                        localStorage.clear()
-                        navigate('/login')
-                        break;
-                    default:
-                        alert(error.response.data.message)
-                        break;
-                }
-            })
-    }
-
     function calcularEquipe() {        
         if (isNaN(parseFloat(hour)) || isNaN(parseFloat(service)) || isNaN(parseFloat(RUP))) {
             setResult("Preencha os campos corretamente")
@@ -87,11 +53,9 @@ const CalculadoraEquipe: React.FC = () => {
     }
     
     function exportToCSV() {
-        const etapa = work.filter((el: any) => el.id === Number(selectWork))
-        if (hour && service && RUP) {
-            // Criação do conteúdo para o arquivo CSV
-            const csvContent = `Hora Diária;Quantidade de Serviço;RUP Potencial;Etapa;Homens Necessários\n${hour};${service};${RUP};${etapa[0].name};${result}`;
-    
+        const etapa = constructions.filter((el: any) => el.id === Number(selectWork))
+        if (hour && service && RUP && result && etapa[0].name) {
+            const csvContent = `Hora Diária;Quantidade de Serviço;RUP Potencial;Tipo de etapa;Homens Necessários\n${hour};${service};${RUP};${etapa[0].name};${result}`;    
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
             if (link.download !== undefined) {
@@ -105,6 +69,8 @@ const CalculadoraEquipe: React.FC = () => {
             } else {
                 console.error('A funcionalidade de download não é suportada pelo seu navegador.');
             }
+        } else {
+            alert('Faça o calculo antes de gerar o CSV')
         }
     }
 
@@ -113,25 +79,14 @@ const CalculadoraEquipe: React.FC = () => {
         <h1>Calculadora de Equipe</h1>
         <div className="content">
             <div className="data-observation">
-                <label htmlFor="select">Escolha uma obra:</label>
-                <select defaultValue={'default'} id="select" onChange={listWorks}>
-                    <option value='default' disabled>Escolha uma obra</option>
+                <label htmlFor="select">Escolha um tipo de etapa:</label>
+                <select defaultValue={'default'} id="select" onChange={(e) => setSelectWork(e.target.value)}>
+                    <option value='default' disabled>Escolha um tipo de etapa</option>
                     {constructions.map((value: any) => (
                         <option key={value.id} value={value.id}>{value.name}</option>
                     ))}
                 </select>
             </div>
-            {selectConstructions && (
-                <div className="data-observation">
-                    <label htmlFor="work">Escolha uma etapa:</label>
-                    <select  defaultValue={'default'} id="work" onChange={(e) => setSelectWork(e.target.value)}>
-                        <option value='default' disabled>Escolha uma etapa</option>
-                        {work.map((value: any) => (
-                            <option key={value.id} value={value.id}>{value.name}</option>
-                        ))}
-                    </select>
-                </div>
-            )}
 
             <div className="data-observation">
                 <label htmlFor="hora-diaria">Hora Diária:</label>

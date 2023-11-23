@@ -3,7 +3,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Loading } from '../components';
-import { MdAttachMoney } from "react-icons/md";
+import { FaChartBar } from "react-icons/fa";
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts'
 import { CSVLink } from "react-csv";
@@ -237,7 +237,7 @@ const Dashboard: React.FC = () => {
                             <h2 className='Report__title'>{dashboard?.general?.melhor_rup_cumulativa}</h2>
                             <p className='Report__paragh'>Melhor rup cumulativa</p>
                             </div>
-                            <MdAttachMoney className='Report__favicon'/>
+                            <FaChartBar className='Report__favicon'/>
                         </div>
 
                         <div className='Report__card'>
@@ -245,7 +245,7 @@ const Dashboard: React.FC = () => {
                             <h2 className='Report__title'>{dashboard?.general?.melhor_rup_diaria}</h2>
                             <p className='Report__paragh'>Melhor rup diaria</p>
                             </div>
-                            <MdAttachMoney className='Report__favicon'/>
+                            <FaChartBar className='Report__favicon'/>
                         </div>
 
                         <div className='Report__card'>
@@ -253,7 +253,7 @@ const Dashboard: React.FC = () => {
                             <h2 className='Report__title'>{dashboard?.general?.percent_produtividade}%</h2>
                             <p className='Report__paragh'>Porcentagem produtividade</p>
                             </div>
-                            <MdAttachMoney className='Report__favicon'/>
+                            <FaChartBar className='Report__favicon'/>
                         </div>
 
                         <div className='Report__card'>
@@ -261,7 +261,7 @@ const Dashboard: React.FC = () => {
                             <h2 className='Report__title'>{dashboard?.general?.pior_rup_cumulativa}</h2>
                             <p className='Report__paragh'>Pior rup cumulativa</p>
                             </div>
-                            <MdAttachMoney className='Report__favicon'/>
+                            <FaChartBar className='Report__favicon'/>
                         </div>
 
                         <div className='Report__card'>
@@ -269,7 +269,7 @@ const Dashboard: React.FC = () => {
                             <h2 className='Report__title'>{dashboard?.general?.pior_rup_diaria}</h2>
                             <p className='Report__paragh'>Pior rup diaria</p>
                             </div>
-                            <MdAttachMoney className='Report__favicon'/>
+                            <FaChartBar className='Report__favicon'/>
                         </div>
                     </div>
                 )}
