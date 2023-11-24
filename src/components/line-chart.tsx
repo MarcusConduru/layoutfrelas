@@ -66,7 +66,7 @@ const handleGraph = (dashData: any) => {
       },
     ],
   };
-  console.log(data)
+
   return data;
 }
 
