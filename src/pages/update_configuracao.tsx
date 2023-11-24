@@ -20,13 +20,13 @@ const UpdateConfiguracao: React.FC = () => {
     useEffect(() => {
         const token = JSON.parse(localStorage.getItem('accessToken') as any)
         Promise.all([axios.request({
-            url: 'https://rup.lazaro-dev.online/public/api/v1/secure/roles',
+            url: 'https://api.irup.online/public/api/v1/secure/roles',
             method: 'GET',
             headers: {
               'authorization': `Bearer ${token.accessToken}`
             }
           }),  axios.request({
-            url: `https://rup.lazaro-dev.online/public/api/v1/secure/users/${id}`,
+            url: `https://api.irup.online/public/api/v1/secure/users/${id}`,
             method: 'GET',
             headers: {
               'authorization': `Bearer ${token.accessToken}`
@@ -72,7 +72,7 @@ const UpdateConfiguracao: React.FC = () => {
         }
 
         axios.request({
-            url: `https://rup.lazaro-dev.online/public/api/v1/secure/users/${id}`,
+            url: `https://api.irup.online/public/api/v1/secure/users/${id}`,
             method: 'PUT',
             data,
             headers: {

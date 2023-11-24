@@ -19,7 +19,7 @@ const NewConfiguracao: React.FC = () => {
     useEffect(() => {
         const token = JSON.parse(localStorage.getItem('accessToken') as any)
         axios.request({
-            url: 'https://rup.lazaro-dev.online/public/api/v1/secure/roles',
+            url: 'https://api.irup.online/public/api/v1/secure/roles',
             method: 'GET',
             headers: {
               'authorization': `Bearer ${token.accessToken}`
@@ -60,7 +60,7 @@ const NewConfiguracao: React.FC = () => {
         }
 
         axios.request({
-            url: `https://rup.lazaro-dev.online/public/api/v1/secure/users`,
+            url: `https://api.irup.online/public/api/v1/secure/users`,
             method: 'POST',
             data,
             headers: {

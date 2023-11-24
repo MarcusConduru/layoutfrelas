@@ -21,7 +21,7 @@ const NewEtapa: React.FC = () => {
         }
         setToken(token)
         axios.request({
-            url: `https://rup.lazaro-dev.online/public/api/v1/secure/work-stage-types/all`,
+            url: `https://api.irup.online/public/api/v1/secure/work-stage-types/all`,
             method: 'GET',
             headers: {
               'authorization': `Bearer ${token.accessToken}`
@@ -55,7 +55,7 @@ const NewEtapa: React.FC = () => {
             work_stage_type_id: select
         }
         axios.request({
-            url: `https://rup.lazaro-dev.online/public/api/v1/secure/constructions/${id}/work-stages`,
+            url: `https://api.irup.online/public/api/v1/secure/constructions/${id}/work-stages`,
             method: 'POST',
             data,
             headers: {

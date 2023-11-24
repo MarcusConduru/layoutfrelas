@@ -26,7 +26,7 @@ const PainelEtapa: React.FC = () => {
         }
 
         axios.request({
-            url: `https://rup.lazaro-dev.online/public/api/v1/secure/constructions/${id}/work-stages`,
+            url: `https://api.irup.online/public/api/v1/secure/constructions/${id}/work-stages`,
             method: 'GET',
             headers: {
               'authorization': `Bearer ${token.accessToken}`
@@ -55,7 +55,7 @@ const PainelEtapa: React.FC = () => {
     const deleteStage = () => {
         setIsLoading(true)
         axios.request({
-            url: `https://rup.lazaro-dev.online/public/api/v1/secure/work-stages/${ids}`,
+            url: `https://api.irup.online/public/api/v1/secure/work-stages/${ids}`,
             method: 'DELETE',
             headers: {
               'authorization': `Bearer ${token.accessToken}`
@@ -87,7 +87,7 @@ const PainelEtapa: React.FC = () => {
         }
         setIsLoading(true)
         axios.request({
-            url: `https://rup.lazaro-dev.online/public/api/v1/secure/work-stages/${stageId}/handle-status`,
+            url: `https://api.irup.online/public/api/v1/secure/work-stages/${stageId}/handle-status`,
             method: 'PUT',
             data,
             headers: {

@@ -23,13 +23,13 @@ const UpdateEtapa: React.FC = () => {
         setToken(token)
         Promise.all([
             axios.request({
-            url: `https://rup.lazaro-dev.online/public/api/v1/secure/work-stage-types/all`,
+            url: `https://api.irup.online/public/api/v1/secure/work-stage-types/all`,
             method: 'GET',
             headers: {
               'authorization': `Bearer ${token.accessToken}`
             }}),
             axios.request({
-                url: `https://rup.lazaro-dev.online/public/api/v1/secure/work-stages/${id}`,
+                url: `https://api.irup.online/public/api/v1/secure/work-stages/${id}`,
                 method: 'GET',
                 headers: {
                   'authorization': `Bearer ${token.accessToken}`
@@ -68,7 +68,7 @@ const UpdateEtapa: React.FC = () => {
             status
         }
         axios.request({
-            url: `https://rup.lazaro-dev.online/public/api/v1/secure/work-stages/${id}`,
+            url: `https://api.irup.online/public/api/v1/secure/work-stages/${id}`,
             method: 'PUT',
             data,
             headers: {

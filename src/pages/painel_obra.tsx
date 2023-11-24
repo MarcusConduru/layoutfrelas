@@ -24,7 +24,7 @@ const PainelObra: React.FC = () => {
         }
 
         axios.request({
-            url: 'https://rup.lazaro-dev.online/public/api/v1/secure/constructions/all',
+            url: 'https://api.irup.online/public/api/v1/secure/constructions/all',
             method: 'GET',
             headers: {
               'authorization': `Bearer ${token.accessToken}`
@@ -53,7 +53,7 @@ const PainelObra: React.FC = () => {
     const changeStatus = () => {
         setIsLoading(true)
         axios.request({
-            url: `https://rup.lazaro-dev.online/public/api/v1/secure/constructions/${id}/handle-status`,
+            url: `https://api.irup.online/public/api/v1/secure/constructions/${id}/handle-status`,
             method: 'PUT',
             headers: {
               'authorization': `Bearer ${token.accessToken}`
@@ -82,7 +82,7 @@ const PainelObra: React.FC = () => {
     const deleteConstruction = () => {
         setIsLoading(true)
         axios.request({
-            url: `https://rup.lazaro-dev.online/public/api/v1/secure/constructions/${ids}`,
+            url: `https://api.irup.online/public/api/v1/secure/constructions/${ids}`,
             method: 'DELETE',
             headers: {
               'authorization': `Bearer ${token.accessToken}`

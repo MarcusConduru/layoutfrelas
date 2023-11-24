@@ -13,7 +13,7 @@ const Construction: React.FC = () => {
     useEffect(() => {
         const token = JSON.parse(localStorage.getItem('accessToken') as any)
         axios.request({
-            url: 'https://rup.lazaro-dev.online/public/api/v1/secure/constructions/all',
+            url: 'https://api.irup.online/public/api/v1/secure/constructions/all',
             method: 'GET',
             headers: {
               'authorization': `Bearer ${token.accessToken}`

@@ -22,7 +22,7 @@ const Configuracao: React.FC = () => {
         }
 
         axios.request({
-            url: 'https://rup.lazaro-dev.online/public/api/v1/secure/users',
+            url: 'https://api.irup.online/public/api/v1/secure/users',
             method: 'GET',
             headers: {
               'authorization': `Bearer ${token.accessToken}`
@@ -51,7 +51,7 @@ const Configuracao: React.FC = () => {
     const deleteUser = (id: string) => {
         setIsLoading(true)
         axios.request({
-            url: `https://rup.lazaro-dev.online/public/api/v1/secure/users/${id}`,
+            url: `https://api.irup.online/public/api/v1/secure/users/${id}`,
             method: 'DELETE',
             headers: {
               'authorization': `Bearer ${token.accessToken}`

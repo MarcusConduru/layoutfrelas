@@ -36,7 +36,7 @@ const CadastroObra: React.FC = () => {
             build_area: area
         }
         axios.request({
-            url: `https://rup.lazaro-dev.online/public/api/v1/secure/constructions`,
+            url: `https://api.irup.online/public/api/v1/secure/constructions`,
             method: 'POST',
             data,
             headers: {

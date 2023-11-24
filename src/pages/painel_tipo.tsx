@@ -17,7 +17,7 @@ const PainelTipo: React.FC = () => {
         }
 
         axios.request({
-            url: 'https://rup.lazaro-dev.online/public/api/v1/secure/work-stage-types/all',
+            url: 'https://api.irup.online/public/api/v1/secure/work-stage-types/all',
             method: 'GET',
             headers: {
               'authorization': `Bearer ${token.accessToken}`

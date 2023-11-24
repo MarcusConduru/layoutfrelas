@@ -44,7 +44,7 @@ const Dashboard: React.FC = () => {
         }
 
         Promise.all([axios.request({
-            url: 'https://rup.lazaro-dev.online/public/api/v1/secure/report',
+            url: 'https://api.irup.online/public/api/v1/secure/report',
             method: 'GET',
             params,
             headers: {
@@ -52,7 +52,7 @@ const Dashboard: React.FC = () => {
             }
           }),
           axios.request({
-            url: 'https://rup.lazaro-dev.online/public/api/v1/secure/dashboard',
+            url: 'https://api.irup.online/public/api/v1/secure/dashboard',
             method: 'GET',
             params,
             headers: {

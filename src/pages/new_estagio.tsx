@@ -36,7 +36,7 @@ const NewEstagio: React.FC = () => {
             climate: climate
         }
         axios.request({
-            url: `https://rup.lazaro-dev.online/public/api/v1/secure/work-stages/${id}/stages`,
+            url: `https://api.irup.online/public/api/v1/secure/work-stages/${id}/stages`,
             method: 'POST',
             data,
             headers: {

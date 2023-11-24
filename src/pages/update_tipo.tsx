@@ -21,7 +21,7 @@ const UpdateTipo: React.FC = () => {
         setToken(token)
 
         axios.request({
-            url: `https://rup.lazaro-dev.online/public/api/v1/secure/work-stage-types/${id}`,
+            url: `https://api.irup.online/public/api/v1/secure/work-stage-types/${id}`,
             method: 'GET',
             headers: {
               'authorization': `Bearer ${token.accessToken}`
@@ -55,7 +55,7 @@ const UpdateTipo: React.FC = () => {
             unit_measurement: measure
         }
         axios.request({
-            url: `https://rup.lazaro-dev.online/public/api/v1/secure/work-stage-types/${id}`,
+            url: `https://api.irup.online/public/api/v1/secure/work-stage-types/${id}`,
             method: 'PUT',
             data,
             headers: {

@@ -24,7 +24,7 @@ const Login: React.FC = () => {
             password
         }
 
-        axios.post('https://rup.lazaro-dev.online/public/api/v1/auth/login', data).then((response) => {
+        axios.post('https://api.irup.online/public/api/v1/auth/login', data).then((response) => {
             localStorage.setItem('accessToken', JSON.stringify({
                 accessToken: response.data.access_token,
                 user: response.data.user

@@ -25,7 +25,7 @@ const UpdateEstagio: React.FC = () => {
         setToken(token)
 
         axios.request({
-            url: `https://rup.lazaro-dev.online/public/api/v1/secure/stages/${id}`,
+            url: `https://api.irup.online/public/api/v1/secure/stages/${id}`,
             method: 'GET',
             headers: {
               'authorization': `Bearer ${token.accessToken}`
@@ -67,7 +67,7 @@ const UpdateEstagio: React.FC = () => {
             climate: climate
         }
         axios.request({
-            url: `https://rup.lazaro-dev.online/public/api/v1/secure/stages/${id}`,
+            url: `https://api.irup.online/public/api/v1/secure/stages/${id}`,
             method: 'PUT',
             data,
             headers: {

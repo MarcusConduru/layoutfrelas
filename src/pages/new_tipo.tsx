@@ -27,7 +27,7 @@ const NewTipo: React.FC = () => {
             unit_measurement: measure
         }
         axios.request({
-            url: `https://rup.lazaro-dev.online/public/api/v1/secure/work-stage-types`,
+            url: `https://api.irup.online/public/api/v1/secure/work-stage-types`,
             method: 'POST',
             data,
             headers: {

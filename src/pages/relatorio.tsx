@@ -17,7 +17,7 @@ const Relatorio: React.FC = () => {
         const token = JSON.parse(localStorage.getItem('accessToken') as any)
         setToken(token)
         axios.request({
-            url: 'https://rup.lazaro-dev.online/public/api/v1/secure/constructions/all',
+            url: 'https://api.irup.online/public/api/v1/secure/constructions/all',
             method: 'GET',
             headers: {
               'authorization': `Bearer ${token.accessToken}`
@@ -47,7 +47,7 @@ const Relatorio: React.FC = () => {
         setSelectConstructions(e.target.value)
         setIsLoading(true)
         axios.request({
-            url: `https://rup.lazaro-dev.online/public/api/v1/secure/constructions/${e.target.value}/work-stages`,
+            url: `https://api.irup.online/public/api/v1/secure/constructions/${e.target.value}/work-stages`,
             method: 'GET',
             headers: {
               'authorization': `Bearer ${token.accessToken}`

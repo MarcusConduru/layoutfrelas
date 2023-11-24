@@ -26,7 +26,7 @@ const UpdateObra: React.FC = () => {
         }
 
         axios.request({
-            url: `https://rup.lazaro-dev.online/public/api/v1/secure/constructions/${id}`,
+            url: `https://api.irup.online/public/api/v1/secure/constructions/${id}`,
             method: 'GET',
             headers: {
               'authorization': `Bearer ${token.accessToken}`
@@ -70,7 +70,7 @@ const UpdateObra: React.FC = () => {
             build_area: area
         }
         axios.request({
-            url: `https://rup.lazaro-dev.online/public/api/v1/secure/constructions/${id}`,
+            url: `https://api.irup.online/public/api/v1/secure/constructions/${id}`,
             method: 'PUT',
             data,
             headers: {
