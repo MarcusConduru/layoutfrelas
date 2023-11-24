@@ -7,6 +7,7 @@ import { FaChartBar } from "react-icons/fa";
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts'
 import { CSVLink } from "react-csv";
+import LineChart from '../components/line-chart';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs
 export const transformDate = (value:string) => {
@@ -278,7 +279,7 @@ const Dashboard: React.FC = () => {
                 </div>
                             
             </div>
-
+            <LineChart data={dashboard} />
             {isLoading && <Loading />}
         </div>
     );
