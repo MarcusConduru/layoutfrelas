@@ -252,7 +252,7 @@ const Dashboard: React.FC = () => {
                         <div className='Report__card'>
                             <div className='Report__box'>
                             <h2 className='Report__title'>{dashboard?.general?.percent_produtividade}%</h2>
-                            <p className='Report__paragh'>Porcentagem produtividade</p>
+                            <p className='Report__paragh'>Delta RUP</p>
                             </div>
                             <FaChartBar className='Report__favicon'/>
                         </div>
