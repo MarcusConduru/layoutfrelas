@@ -62,16 +62,16 @@ const Dashboard: React.FC = () => {
             setReport(response[0].data)
             setDashboard(response[1].data)
             const report = response[0].data?.work_stage?.stages.map((value: any) => {
-                return (`${transformDate(value.observation_date)},${value.number_men},${value.work_hours.toFixed(2)}, ${value.Hh}, ${value.quantity_service.toFixed(2)}, ${value.Hh_cumulativo}, ${value.Qs_cumulativo},${value.rup_diaria},${value.rup_cumulativa},${value.rup_diaria_menor_rup_cumulativa === null ? '0' : value.rup_diaria_menor_rup_cumulativa},${value.rup_potencial},${value.observation},${value.climate}`).split(',')
+                return (`${transformDate(value.observation_date)},${value.number_men},${value.work_hours}, ${value.Hh}, ${value.quantity_service}, ${value.Hh_cumulativo}, ${value.Qs_cumulativo},${value.rup_diaria},${value.rup_cumulativa},${value.rup_diaria_menor_rup_cumulativa === null ? '0' : value.rup_diaria_menor_rup_cumulativa},${value.rup_potencial},${value.observation},${value.climate}`).split(',')
             })
 
             const csv = response[0].data?.work_stage?.stages.map((value: any) => {
                 return {
                     Dia: transformDate(value.observation_date),
                     QtDehomens: value.number_men,
-                    Jornada: value.work_hours.toFixed(2),
+                    Jornada: value.work_hours,
                     Hh: value.Hh,
-                    QtdeServiço: value.quantity_service.toFixed(2),
+                    QtdeServiço: value.quantity_service,
                     HhCUM: value.Hh_cumulativo,
                     QsCUM: value.Qs_cumulativo,
                     RUPDIÁRIA: value.rup_diaria,
@@ -212,9 +212,9 @@ const Dashboard: React.FC = () => {
                                 <tr key={value.id}>
                                     <td data-label="Dia">{transformDate(value.observation_date)}</td>
                                     <td data-label="Qt. de homens">{value.number_men}</td>
-                                    <td data-label="Jornada">{value.work_hours.toFixed(2)}</td>
+                                    <td data-label="Jornada">{value.work_hours}</td>
                                     <td data-label="Hh">{value.Hh}</td>
-                                    <td data-label={`Qt. de serviço(${report?.work_stage?.work_stage_type?.unit_measurement})`}>{value.quantity_service.toFixed(2)}</td>
+                                    <td data-label={`Qt. de serviço(${report?.work_stage?.work_stage_type?.unit_measurement})`}>{value.quantity_service}</td>
                                     <td data-label="Hh CUM">{value.Hh_cumulativo}</td>
                                     <td data-label="Qs CUM">{value.Qs_cumulativo}</td>
                                     <td data-label="RUP DIÁRIA">{value.rup_diaria}</td>

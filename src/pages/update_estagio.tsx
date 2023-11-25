@@ -14,7 +14,7 @@ const UpdateEstagio: React.FC = () => {
     const [climate, setClimate] = useState('')
     const [isLoading, setIsLoading] = useState(true)
     const [token, setToken] = useState<any>('')
-    const { id, item } = useParams()
+    const { id, item, name } = useParams()
 
     useEffect(() => {
         const token = JSON.parse(localStorage.getItem('accessToken') as any)
@@ -61,8 +61,8 @@ const UpdateEstagio: React.FC = () => {
         const data = {
             observation_date: date,
             number_men: men,
-            work_hours: hour,
-            quantity_service: service,
+            work_hours: Number(hour.replace(',', '.')),
+            quantity_service: Number(service.replace(',', '.')),
             observation: observation,
             climate: climate
         }
@@ -75,7 +75,7 @@ const UpdateEstagio: React.FC = () => {
             }
           }).then(() => {
             alert('Estagio alterado com sucesso')
-            navigate(`/painel/estagio/${item}`)
+            navigate(`/painel/estagio/${item}/${name}/${id}`)
           }).catch((error) => {
             setIsLoading(false)
             switch (error.response.status) {  
@@ -105,7 +105,7 @@ const UpdateEstagio: React.FC = () => {
     return (
         <div className="container">
             <div className="content">
-                <h1>Editar Estagio</h1>
+                <h1>Editar Observação Diária</h1>
                 <form>
                     <div className="data-observation">
                         <label htmlFor="observation_date">Data de observação:</label>

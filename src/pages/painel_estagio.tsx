@@ -35,10 +35,10 @@ const PainelEstagio: React.FC = () => {
           }).catch((error) => {
             setIsLoading(false)
             switch (error.response.status) {  
-                case 404:
-                    localStorage.clear()
-                    navigate('/login')
-                    break;
+                // case 404:
+                //     localStorage.clear()
+                //     navigate('/login')
+                //     break;
                 default:
                     alert('Algo de errado aconteceu. Tente novamente mais tarde.')
                     break;
@@ -78,7 +78,7 @@ const PainelEstagio: React.FC = () => {
                 <h1>Observações Diárias</h1>
                 <div className="data-info">
                     <div className="data">
-                        <button onClick={() => navigate(`/painel/estagio/novo/${id}`)}>Criar Observação Diária</button>
+                        <button onClick={() => navigate(`/painel/estagio/${id}/novo/${name}/${item}`)}>Criar Observação Diária</button>
                     </div>
                     <table>
                         <thead>
@@ -99,7 +99,7 @@ const PainelEstagio: React.FC = () => {
                                     <td>{name}</td>
                                     <td>{transformDate(value.observation_date)}</td>
                                     <td>{value.number_men}</td>
-                                    <td><button onClick={() => navigate(`/painel/estagio/${id}/editar/${value.id}`)}>Editar</button></td>
+                                    <td><button onClick={() => navigate(`/painel/estagio/${id}/editar/${name}/${value.id}`)}>Editar</button></td>
                                     {token?.user?.roles[0].name === 'Administrador' && (
                                         <td><button onClick={() => {setIsClose(true); setIds(value.id)}}>Apagar</button></td>
                                     )}

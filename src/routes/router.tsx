@@ -19,8 +19,8 @@ const Router: React.FC = () => {
         <Route path='/painel/etapa/:id/novo' element={<NewEtapa />} />
         <Route path='/painel/etapa/editar/:id' element={<UpdateEtapa />} />
         <Route path='/painel/estagio/:id/:name/:item' element={<PainelEstagio />} />
-        <Route path='/painel/estagio/novo/:id' element={<NewEstagio />} />
-        <Route path='/painel/estagio/:item/editar/:id' element={<EditStage />} />
+        <Route path='/painel/estagio/:item/novo/:name/:id' element={<NewEstagio />} />
+        <Route path='/painel/estagio/:item/editar/:name/:id' element={<EditStage />} />
         <Route path='/painel/tipo' element={<PainelTipo />} />
         <Route path='/painel/tipo/novo' element={<NewTipo />} />
         <Route path='/painel/tipo/editar/:id' element={<UpdateTipo />} />

@@ -14,7 +14,7 @@ const NewEstagio: React.FC = () => {
     const [climate, setClimate] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const [token, setToken] = useState<any>('')
-    const { id } = useParams()
+    const { id, item, name } = useParams()
 
     useEffect(() => {
         const token = JSON.parse(localStorage.getItem('accessToken') as any)
@@ -30,8 +30,8 @@ const NewEstagio: React.FC = () => {
         const data = {
             observation_date: date,
             number_men: men,
-            work_hours: hour,
-            quantity_service: service,
+            work_hours: Number(hour.replace(',', '.')),
+            quantity_service: Number(service.replace(',', '.')),
             observation: observation,
             climate: climate
         }
@@ -44,18 +44,18 @@ const NewEstagio: React.FC = () => {
             }
           }).then(() => {
             alert('Estagio criado com sucesso')
-            navigate(`/painel/estagio/${id}`)
+            navigate(`/painel/estagio/${item}/${name}/${id}`)
           }).catch((error) => {
             setIsLoading(false)
             switch (error.response.status) {  
-                case 404:
-                    localStorage.clear()
-                    navigate('/login')
-                    break;
-                case 440:
-                    localStorage.clear()
-                    navigate('/login')
-                    break;
+                // case 404:
+                //     localStorage.clear()
+                //     navigate('/login')
+                //     break;
+                // case 440:
+                //     localStorage.clear()
+                //     navigate('/login')
+                //     break;
                 default:
                     alert(
                         error.response.data.message
@@ -74,7 +74,7 @@ const NewEstagio: React.FC = () => {
     return (
         <div className="container">
             <div className="content">
-                <h1>Criar Estagio</h1>
+                <h1>Criar Observação Diária</h1>
                 <form>
                     <div className="data-observation">
                         <label htmlFor="observation_date">Data de observação:</label>
