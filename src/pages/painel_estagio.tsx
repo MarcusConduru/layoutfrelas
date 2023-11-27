@@ -78,7 +78,7 @@ const PainelEstagio: React.FC = () => {
                 <h1>Observações Diárias</h1>
                 <div className="data-info">
                     <div className="data">
-                        <button onClick={() => navigate(`/painel/estagio/${id}/novo/${name}/${item}`)}>Criar Observação Diária</button>
+                        <button disabled={phase?.construction?.status === 'PROGRESS' ? false : true} onClick={() => navigate(`/painel/estagio/${id}/novo/${name}/${item}`)}>Criar Observação Diária</button>
                     </div>
                     <table>
                         <thead>
