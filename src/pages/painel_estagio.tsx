@@ -35,10 +35,10 @@ const PainelEstagio: React.FC = () => {
           }).catch((error) => {
             setIsLoading(false)
             switch (error.response.status) {  
-                // case 404:
-                //     localStorage.clear()
-                //     navigate('/login')
-                //     break;
+                case 404:
+                    localStorage.clear()
+                    navigate('/login')
+                    break;
                 default:
                     alert('Algo de errado aconteceu. Tente novamente mais tarde.')
                     break;

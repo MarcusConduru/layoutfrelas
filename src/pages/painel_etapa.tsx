@@ -152,7 +152,7 @@ const PainelEtapa: React.FC = () => {
                                     <td style={{ color: value.status === 'PROGRESS' ? '#da2320' : '#16921c' }}>{value.status === 'PROGRESS' ? 'Em andamento' : 'Finalizado'}</td>
                                     {token?.user?.roles[0].name !== 'Visualizador' && (
                                         <>
-                                            <td><button onClick={() => navigate(`/painel/estagio/${value.id}/${value.name.replace(' ', '')}/${id}`)}>Alimentar</button></td>
+                                            <td><button disabled={value.status === 'PROGRESS' ? false : true} onClick={() => navigate(`/painel/estagio/${value.id}/${value.name.replace(' ', '')}/${id}`)}>Alimentar</button></td>
                                             <td><button onClick={() => navigate(`/painel/etapa/editar/${value.id}`)}>Editar</button></td>
                                             <td><button disabled={value.status === 'PROGRESS' ? false : true} onClick={() => {setIsStage(true); setStatus(value.status); setStageId(value.id)}}>{value.status === 'PROGRESS' ? 'Encerrar' : 'Encerrado'}</button></td>
                                         </>

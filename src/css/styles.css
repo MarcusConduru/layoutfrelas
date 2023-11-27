@@ -113,6 +113,24 @@ button {
     border-radius: 5px;
     cursor: pointer;
     margin-top: 20px;
+    transition: all .3s;
+}
+
+
+
+.help {
+    margin: 0;
+    background: #17182F;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all .3s;
+}
+
+.help:hover {
+    background: #24263f;
 }
 
 .csv {
@@ -127,7 +145,7 @@ table {
 }
 
 button:hover {
-    background: #0f1020;
+    background: #24263f;
 }
 
 button:disabled {
@@ -260,6 +278,7 @@ button:disabled {
 .top-bar {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
     padding: 10px;
 }

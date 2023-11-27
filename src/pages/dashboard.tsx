@@ -248,7 +248,7 @@ const Dashboard: React.FC = () => {
                             </div>
                             <FaChartBar className='Report__favicon'/>
                         </div>
-
+                        
                         <div className='Report__card'>
                             <div className='Report__box'>
                             <h2 className='Report__title'>{dashboard?.general?.percent_produtividade}%</h2>

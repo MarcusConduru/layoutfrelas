@@ -24,7 +24,7 @@ const Menu: React.FC = () => {
     return (
         <div className="container3">
             <div className="top-bar">
-                <div className="help">Ajuda</div>
+                <a className='help' target='_blank' href='https://www.calameo.com/read/007536497958be8ca36d5' rel="noreferrer">Ajuda</a>
                 <div className="user" id="name">Olá, {token?.user.name}</div>
             </div>
             <div className="menu">

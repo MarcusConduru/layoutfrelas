@@ -36,7 +36,7 @@ const NewEstagio: React.FC = () => {
             climate: climate
         }
         axios.request({
-            url: `https://api.irup.online/public/api/v1/secure/work-stages/${id}/stages`,
+            url: `https://api.irup.online/public/api/v1/secure/work-stages/${item}/stages`,
             method: 'POST',
             data,
             headers: {
@@ -102,7 +102,7 @@ const NewEstagio: React.FC = () => {
                     </div>
                 </form>
                 <div className="buttons2">
-                    <button onClick={() => navigate(`/painel/estagio/${id}`)}>Voltar</button>
+                    <button onClick={() => navigate(`/painel/estagio/${item}`)}>Voltar</button>
                     <button onClick={NewStage}>Criar</button>
                 </div>
             </div>
