@@ -15,6 +15,7 @@ const PainelEtapa: React.FC = () => {
     const [isStage,setIsStage] = useState(false)
     const [ids, setIds] = useState('')
     const [status, setStatus] = useState('')
+    const [construction, setConstruction] = useState('')
     const [stageId, setStageId] = useState('')
 
     useEffect(() => {
@@ -24,15 +25,24 @@ const PainelEtapa: React.FC = () => {
             navigate('/login')
             localStorage.clear()
         }
-
-        axios.request({
+        
+        Promise.all([axios.request({
             url: `https://api.irup.online/public/api/v1/secure/constructions/${id}/work-stages`,
             method: 'GET',
             headers: {
               'authorization': `Bearer ${token.accessToken}`
             }
-          }).then((response) => {
-            setStage(response.data)
+          }),
+          axios.request({
+            url: `https://api.irup.online/public/api/v1/secure/constructions/${id}`,
+            method: 'GET',
+            headers: {
+              'authorization': `Bearer ${token.accessToken}`
+            }
+          })])
+        .then((response) => {
+            setConstruction(response[1].data.status)
+            setStage(response[0].data)
             setIsLoading(false)
           }).catch((error) => {
             setIsLoading(false)
@@ -122,7 +132,7 @@ const PainelEtapa: React.FC = () => {
                 <div className="data-info">
                     {token?.user?.roles[0].name !== 'Visualizador' && (
                         <div className="data">
-                            <button disabled={stage?.construction?.status === 'PROGRESS' ? false : true} onClick={() => navigate(`/painel/etapa/${id}/novo`)}>Criar Etapa</button>
+                            <button disabled={construction === 'PROGRESS' ? false : true} onClick={() => navigate(`/painel/etapa/${id}/novo`)}>Criar Etapa</button>
                         </div>
                     )}
                     <table>

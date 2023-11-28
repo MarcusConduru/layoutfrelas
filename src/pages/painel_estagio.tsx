@@ -9,6 +9,7 @@ const PainelEstagio: React.FC = () => {
     const [phase, setPhase] = useState<any>([])
     const [isLoading,setIsLoading] = useState(true)
     const [isChange, setIsChange] = useState(false)
+    const [status, setStatus] = useState('')
     const navigate = useNavigate()
     const [token, setToken] = useState<any>('')
     const [isClose,setIsClose] = useState(false)
@@ -23,14 +24,23 @@ const PainelEstagio: React.FC = () => {
             localStorage.clear()
         }
 
-        axios.request({
+        Promise.all([axios.request({
             url: `https://api.irup.online/public/api/v1/secure/work-stages/${id}/stages`,
             method: 'GET',
             headers: {
               'authorization': `Bearer ${token.accessToken}`
             }
-          }).then((response) => {
-            setPhase(response.data)
+          }),
+          axios.request({
+            url: `https://api.irup.online/public/api/v1/secure/constructions/${item}/work-stages`,
+            method: 'GET',
+            headers: {
+              'authorization': `Bearer ${token.accessToken}`
+            }
+          })])
+        .then((response) => {
+            setPhase(response[0].data)
+            setStatus(response[1].data[0].construction.status)
             setIsLoading(false)
           }).catch((error) => {
             setIsLoading(false)
@@ -78,7 +88,7 @@ const PainelEstagio: React.FC = () => {
                 <h1>Observações Diárias</h1>
                 <div className="data-info">
                     <div className="data">
-                        <button disabled={phase?.construction?.status === 'PROGRESS' ? false : true} onClick={() => navigate(`/painel/estagio/${id}/novo/${name}/${item}`)}>Criar Observação Diária</button>
+                        <button disabled={status === 'PROGRESS' ? false : true} onClick={() => navigate(`/painel/estagio/${id}/novo/${name}/${item}`)}>Criar Observação Diária</button>
                     </div>
                     <table>
                         <thead>
