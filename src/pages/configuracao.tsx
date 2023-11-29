@@ -33,11 +33,8 @@ const Configuracao: React.FC = () => {
           }).catch((error) => {
             setIsLoading(false)
             switch (error.response.status) {  
-                case 404:
-                    localStorage.clear()
-                    navigate('/login')
-                    break;
                 case 440:
+                    alert('Token de acesso expirado.')
                     localStorage.clear()
                     navigate('/login')
                     break;
@@ -62,11 +59,8 @@ const Configuracao: React.FC = () => {
           }).catch((error) => {
             setIsLoading(false)
             switch (error.response.status) {  
-                case 404:
-                    localStorage.clear()
-                    navigate('/login')
-                    break;
                 case 440:
+                    alert('Token de acesso expirado.')
                     localStorage.clear()
                     navigate('/login')
                     break;

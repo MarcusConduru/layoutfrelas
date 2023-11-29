@@ -45,11 +45,8 @@ const UpdateEtapa: React.FC = () => {
           }).catch((error) => {
             setIsLoading(false)
             switch (error.response.status) {  
-                case 404:
-                    localStorage.clear()
-                    navigate('/login')
-                    break;
                 case 440:
+                    alert('Token de acesso expirado.')
                     localStorage.clear()
                     navigate('/login')
                     break;
@@ -75,16 +72,13 @@ const UpdateEtapa: React.FC = () => {
               'authorization': `Bearer ${token.accessToken}`
             }
           }).then(() => {
-            alert('Etapa criado com sucesso')
+            alert('Etapa alterado com sucesso')
             navigate(-1)
           }).catch((error) => {
             setIsLoading(false)
             switch (error.response.status) {  
-                case 404:
-                    localStorage.clear()
-                    navigate('/login')
-                    break;
                 case 440:
+                    alert('Token de acesso expirado.')
                     localStorage.clear()
                     navigate('/login')
                     break;
@@ -117,7 +111,7 @@ const UpdateEtapa: React.FC = () => {
                 </form>
                 <div className="buttons2">
                     <button onClick={() => navigate(-1)}>Voltar</button>
-                    <button onClick={NewStage}>Salavr</button>
+                    <button onClick={NewStage}>Salvar</button>
                 </div>
             </div>
             {isLoading && <Loading />}

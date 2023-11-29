@@ -45,7 +45,8 @@ const PainelEstagio: React.FC = () => {
           }).catch((error) => {
             setIsLoading(false)
             switch (error.response.status) {  
-                case 404:
+                case 440:
+                    alert('Token de acesso expirado.')
                     localStorage.clear()
                     navigate('/login')
                     break;
@@ -71,7 +72,8 @@ const PainelEstagio: React.FC = () => {
           }).catch((error) => {
             setIsLoading(false)
             switch (error.response.status) {  
-                case 404:
+                case 440:
+                    alert('Token de acesso expirado.')
                     localStorage.clear()
                     navigate('/login')
                     break;
@@ -109,7 +111,7 @@ const PainelEstagio: React.FC = () => {
                                     <td>{name}</td>
                                     <td>{transformDate(value.observation_date)}</td>
                                     <td>{value.number_men}</td>
-                                    <td><button onClick={() => navigate(`/painel/estagio/${id}/editar/${name}/${value.id}`)}>Editar</button></td>
+                                    <td><button onClick={() => navigate(`/painel/estagio/${item}/editar/${name}/${value.id}/${id}`)}>Editar</button></td>
                                     {token?.user?.roles[0].name === 'Administrador' && (
                                         <td><button onClick={() => {setIsClose(true); setIds(value.id)}}>Apagar</button></td>
                                     )}

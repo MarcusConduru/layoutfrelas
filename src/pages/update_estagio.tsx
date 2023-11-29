@@ -14,7 +14,7 @@ const UpdateEstagio: React.FC = () => {
     const [climate, setClimate] = useState('')
     const [isLoading, setIsLoading] = useState(true)
     const [token, setToken] = useState<any>('')
-    const { id, item, name } = useParams()
+    const { id, item, name, idd } = useParams()
 
     useEffect(() => {
         const token = JSON.parse(localStorage.getItem('accessToken') as any)
@@ -41,11 +41,8 @@ const UpdateEstagio: React.FC = () => {
           }).catch((error) => {
             setIsLoading(false)
             switch (error.response.status) {  
-                case 404:
-                    localStorage.clear()
-                    navigate('/login')
-                    break;
                 case 440:
+                    alert('Token de acesso expirado.')
                     localStorage.clear()
                     navigate('/login')
                     break;
@@ -75,15 +72,12 @@ const UpdateEstagio: React.FC = () => {
             }
           }).then(() => {
             alert('Estagio alterado com sucesso')
-            navigate(`/painel/estagio/${item}/${name}/${id}`)
+            navigate(`/painel/estagio/${idd}/${name}/${item}`)
           }).catch((error) => {
             setIsLoading(false)
             switch (error.response.status) {  
-                case 404:
-                    localStorage.clear()
-                    navigate('/login')
-                    break;
                 case 440:
+                    alert('Token de acesso expirado.')
                     localStorage.clear()
                     navigate('/login')
                     break;
