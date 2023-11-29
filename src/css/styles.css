@@ -497,6 +497,22 @@ table tbody tr:nth-child(even) {
     background-color: white;
 }
 
+.buttons {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.buttons button {
+    margin-top: 0;
+}
+
+.table__td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 /*responsive*/
 
 @media (max-width: 700px) {

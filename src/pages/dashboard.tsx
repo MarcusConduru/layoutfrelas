@@ -18,6 +18,7 @@ export const transformDate = (value:string) => {
 }
 
 const Dashboard: React.FC = () => {
+    const [table, setTable] = useState(true)
     const [report, setReport] = useState<any>([])
     const [dashboard, setDashboard] = useState<any>([])
     const [isLoading,setIsLoading] = useState(true)
@@ -25,7 +26,7 @@ const Dashboard: React.FC = () => {
     const [CSV, SetCSV] = useState([])
     const {workId, constructionId} = useParams()
     const navigate = useNavigate()
-
+    
     const createPdf = () => {
         const pdfGenerator = pdfMake.createPdf(dd)
         pdfGenerator.download(`Relatório ${report?.construction?.name}`)
@@ -62,8 +63,9 @@ const Dashboard: React.FC = () => {
             setReport(response[0].data)
             setDashboard(response[1].data)
             const report = response[0].data?.work_stage?.stages.map((value: any) => {
-                return (`${transformDate(value.observation_date)},${value.number_men},${value.work_hours}, ${value.Hh}, ${value.quantity_service}, ${value.Hh_cumulativo}, ${value.Qs_cumulativo},${value.rup_diaria},${value.rup_cumulativa},${value.rup_diaria_menor_rup_cumulativa === null ? '0' : value.rup_diaria_menor_rup_cumulativa},${value.rup_potencial},${value.observation},${value.climate}`).split(',')
+                return (`${transformDate(value.observation_date)}*-${value.number_men}*-${value.work_hours}*-${value.Hh}*-${value.quantity_service}*-${value.Hh_cumulativo}*- ${value.Qs_cumulativo}*-${value.rup_diaria}*-${value.rup_cumulativa}*-${value.rup_diaria_menor_rup_cumulativa === null ? '0' : value.rup_diaria_menor_rup_cumulativa}*-${value.rup_potencial}*-${value.observation}*-${value.climate}`).split('*-')
             })
+
 
             const csv = response[0].data?.work_stage?.stages.map((value: any) => {
                 return {
@@ -82,6 +84,7 @@ const Dashboard: React.FC = () => {
                     Clima: value.climate,
                 }
             })
+
 
             SetCSV(csv)
 
@@ -143,15 +146,17 @@ const Dashboard: React.FC = () => {
     return (
         <div className="container">
             <div className="content">
-                <h1>Relatório da obra {report?.construction?.name} 
+                <h1>Relatório da obra {report?.construction?.name}</h1>
+                <div className="buttons">
                     <button onClick={createPdf} className='csv'>Gerar PDF</button>  
                     <CSVLink data={CSV} className='csv' filename={`Relatório ${report?.construction?.name}`}>
                         <button onClick={() => {}}>Gerar CSV</button>
                     </CSVLink>
-                </h1>
+                    <button onClick={() => setTable(!table)} className='csv'>Ver Valores</button>  
+                </div>
 
                 <div className="data-info">
-                    <table className='table'>
+                    <table className='table' style={{ tableLayout: table ? 'fixed' : 'auto' }}>
                         <thead>
                             <tr>
                                 <th>Construtora</th>
@@ -185,41 +190,41 @@ const Dashboard: React.FC = () => {
                 </div>
 
                 <div className="data-info">
-                    <table className='table'>
+                    <table className='table' style={{ tableLayout: table ? 'fixed' : 'auto' }}>
                         <thead>
                             <tr>
-                                <th>Dia</th>
-                                <th>Qt. de homens</th>
-                                <th>Jornada</th>
-                                <th>Hh</th>
-                                <th>Qt. de serviço({report?.work_stage?.work_stage_type?.unit_measurement})</th>
-                                <th>Hh CUM</th>
-                                <th>Qs CUM</th>
-                                <th>RUP DIÁRIA</th>
-                                <th>RUP CUM</th>
-                                <th>{`DIÁRIA < CUM`}</th>
-                                <th>RUP POT</th>
-                                <th>Observações</th>
-                                <th>Clima</th>
+                                <th className={table ? 'table__th' : ''}>Dia</th>
+                                <th className={table ? 'table__th' : ''}>Qt. de homens</th>
+                                <th className={table ? 'table__th' : ''}>Jornada</th>
+                                <th className={table ? 'table__th' : ''}>Hh</th>
+                                <th className={table ? 'table__th' : ''}>Qt. de serviço({report?.work_stage?.work_stage_type?.unit_measurement})</th>
+                                <th className={table ? 'table__th' : ''}>Hh CUM</th>
+                                <th className={table ? 'table__th' : ''}>Qs CUM</th>
+                                <th className={table ? 'table__th' : ''}>RUP DIÁRIA</th>
+                                <th className={table ? 'table__th' : ''}>RUP CUM</th>
+                                <th className={table ? 'table__th' : ''}>{`DIÁRIA < CUM`}</th>
+                                <th className={table ? 'table__th' : ''}>RUP POT</th>
+                                <th className={table ? 'table__th' : ''}>Observações</th>
+                                <th className={table ? 'table__th' : ''}>Clima</th>
                             </tr>
                         </thead>
                 
                         <tbody id="users-table-body">
                             {!isLoading && report?.work_stage.stages.map((value: any) => (
                                 <tr key={value.id}>
-                                    <td data-label="Dia">{transformDate(value.observation_date)}</td>
-                                    <td data-label="Qt. de homens">{value.number_men}</td>
-                                    <td data-label="Jornada">{value.work_hours}</td>
-                                    <td data-label="Hh">{value.Hh}</td>
-                                    <td data-label={`Qt. de serviço(${report?.work_stage?.work_stage_type?.unit_measurement})`}>{value.quantity_service}</td>
-                                    <td data-label="Hh CUM">{value.Hh_cumulativo}</td>
-                                    <td data-label="Qs CUM">{value.Qs_cumulativo}</td>
-                                    <td data-label="RUP DIÁRIA">{value.rup_diaria}</td>
-                                    <td data-label="RUP CUM">{value.rup_cumulativa}</td>
-                                    <td data-label="DIÁRIA < CUM">{value.rup_diaria_menor_rup_cumulativa}</td>
-                                    <td data-label="RUP POT">{value.rup_potencial}</td>
-                                    <td data-label="Observações">{value.observation}</td>
-                                    <td data-label="Clima">{value.climate}</td>
+                                    <td className={table ? 'table__td' : ''} data-label="Dia">{transformDate(value.observation_date)}</td>
+                                    <td className={table ? 'table__td' : ''} data-label="Qt. de homens">{value.number_men}</td>
+                                    <td className={table ? 'table__td' : ''} data-label="Jornada">{value.work_hours}</td>
+                                    <td className={table ? 'table__td' : ''} data-label="Hh">{value.Hh}</td>
+                                    <td className={table ? 'table__td' : ''} data-label={`Qt. de serviço(${report?.work_stage?.work_stage_type?.unit_measurement})`}>{value.quantity_service}</td>
+                                    <td className={table ? 'table__td' : ''} data-label="Hh CUM">{value.Hh_cumulativo}</td>
+                                    <td className={table ? 'table__td' : ''} data-label="Qs CUM">{value.Qs_cumulativo}</td>
+                                    <td className={table ? 'table__td' : ''} data-label="RUP DIÁRIA">{value.rup_diaria}</td>
+                                    <td className={table ? 'table__td' : ''} data-label="RUP CUM">{value.rup_cumulativa}</td>
+                                    <td className={table ? 'table__td' : ''} data-label="DIÁRIA < CUM">{value.rup_diaria_menor_rup_cumulativa}</td>
+                                    <td className={table ? 'table__td' : ''} data-label="RUP POT">{value.rup_potencial}</td>
+                                    <td className={table ? 'table__td' : ''} data-label="Observações">{value.observation}</td>
+                                    <td className={table ? 'table__td' : ''} data-label="Clima">{value.climate}</td>
                                 </tr>
                             ))}
                         </tbody>
