@@ -45,7 +45,7 @@ const CalculadoraEquipe: React.FC = () => {
             setResult("Preencha os campos corretamente")
         } else {
             const quantidadeHomens = Math.round((parseFloat(RUP) * parseFloat(service)) / parseFloat(hour));
-            setResult(quantidadeHomens.toFixed(2) + ' homens necessários na equipe')
+            setResult('Serão necessários ' + quantidadeHomens.toFixed(2) + ' homens na equipe')
         }
     }
     

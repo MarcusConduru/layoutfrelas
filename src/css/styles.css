@@ -54,7 +54,6 @@ body, html {
 .green-section h1 {
     font-size: 36px;
     font-weight: bold;
-    text-decoration: underline;
 }
 
 .white-section {
@@ -511,6 +510,12 @@ table tbody tr:nth-child(even) {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.result {
+    color: #f7302c;
+    font-weight: bold;
+    font-size: 18px;
 }
 
 /*responsive*/

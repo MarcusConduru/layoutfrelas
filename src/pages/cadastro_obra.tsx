@@ -69,7 +69,7 @@ const CadastroObra: React.FC = () => {
     return (
         <div className="container">
         <div className="content">
-            <h1>Nova de Obra</h1>
+            <h1>Nova Obra</h1>
             <form>
                 <div className="data-observation">
                     <label htmlFor="obra">Nome da Obra:</label>

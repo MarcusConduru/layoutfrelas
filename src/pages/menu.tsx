@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import menu from '../assets/logo_menu.png'
 import { useNavigate } from 'react-router-dom';
 
 const Menu: React.FC = () => {
@@ -28,7 +27,7 @@ const Menu: React.FC = () => {
                 <div className="user" id="name">Olá, {token?.user.name}</div>
             </div>
             <div className="menu">
-                <img src={menu} alt="Logo da empresa" width="150" />
+                <h1>Menu</h1>
                 <div className="buttons3">
                     <button onClick={() => navigate('/painel/obra')}> 
                         <span className="icon icon-controle"></span> 

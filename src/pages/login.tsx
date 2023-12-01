@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import empresaImg  from '../assets/logo_login.png'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Loading } from '../components';
@@ -50,7 +49,7 @@ const Login: React.FC = () => {
     return (
     <div className="container2">
         <div className="green-section">
-            <img src={empresaImg} alt="Logo da empresa" width="150" />
+            <h1>Bem vindo</h1>
             <p className="system-description">SISTEMA DE MENSURAÇÃO E CONTROLE DE MÃO DE OBRA DA CONSTRUÇÃO CIVIL</p>
         </div>
         <div className="white-section">
